@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "302342456007",
+    "firebase_url": "https://tribun---deniseict.firebaseio.com",
+    "project_id": "tribun---deniseict",
+    "storage_bucket": "tribun---deniseict.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302342456007:android:1452013263f35edc9cb4e2",
+        "android_client_info": {
+          "package_name": "dev.bytecode.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302342456007-u58kv1oi1vtgqan7rpkjkkfevidquuhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNv8eqQOL9FkNzv1tW-iAuI8TiyMMABNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302342456007-u58kv1oi1vtgqan7rpkjkkfevidquuhr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
