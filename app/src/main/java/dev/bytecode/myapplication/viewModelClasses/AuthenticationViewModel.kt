@@ -30,22 +30,6 @@ class AuthenticationViewModel : ViewModel() {
 
 
 
-    // The login screen shows different fields based on the user type.
-    // I.e. if it is not a new user, don't show username field.
-    var userType = MutableLiveData(UserType.ExistingUser)
-    fun changeUsertype(type: UserType) {
-        userType.value = type
-    }
-
-
-
-    // Make authentication through Firebase.
-    private val auth =  FirebaseAuth.getInstance()
-    // Hold the state of the current user.
-    var currentUser: FirebaseUser? = auth.currentUser
-
-
-
     // When the user inputs the text fields,
     // these functions change the corresponding MutableLiveData variables
     fun setUserName(name: String) {
@@ -62,6 +46,23 @@ class AuthenticationViewModel : ViewModel() {
 
 
 
+    // The login screen shows different fields based on the user type.
+    // I.e. if it is not a new user, don't show username field.
+    private var _userType = MutableLiveData(UserType.ExistingUser)
+    val userType: LiveData<UserType> = _userType
+    fun changeUsertype(type: UserType) {
+        _userType.value = type
+    }
+
+
+
+    // Make authentication through Firebase.
+    private val auth =  FirebaseAuth.getInstance()
+    // Hold the state of the current user.
+    var currentUser: FirebaseUser? = auth.currentUser
+
+
+
     // This function signs the new users through Firebase
     fun signUpNewUser(
         activity: Activity,
@@ -70,6 +71,8 @@ class AuthenticationViewModel : ViewModel() {
 
         // Username should not be empty
         if (userName.value == null) {
+            makeToastMessage("Lütfen Gerekli Bilgileri Doldurun.", activity)
+
             return
         }
 
@@ -94,8 +97,8 @@ class AuthenticationViewModel : ViewModel() {
                         currentUser = it
                     }
 
-                    // Navigate to home page
-                    // navigation()
+                    // Navigate to team select page
+                    navigation()
                     makeToastMessage("Kayıt Başarılı", activity)
 
                 } else {
@@ -136,7 +139,7 @@ class AuthenticationViewModel : ViewModel() {
                     }
 
                     // Navigate to home page
-                    // navigation()
+                    navigation()
                     makeToastMessage("Giriş Başarılı", activity)
 
 
@@ -191,9 +194,9 @@ class AuthenticationViewModel : ViewModel() {
 
 
     private fun makeToastMessage(message: String, activity: Activity) {
-        Toast.makeText(
+        val toast = Toast.makeText(
             activity.baseContext, message,
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_SHORT,
         ).show()
     }
 
