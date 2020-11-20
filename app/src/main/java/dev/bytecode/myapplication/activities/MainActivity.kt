@@ -53,8 +53,8 @@ class MainActivity : AppCompatActivity() {
 fun TribunApp(activity: Activity, goToHomePage: () -> Unit,goToTeamSelectPage: () -> Unit) {
 
 
-      // This screen shows username, e-mail, and password fields
-      LoginScreen(activity, goToHomePage, goToTeamSelectPage)
+    // This screen shows username, e-mail, and password fields
+    LoginScreen(activity, goToHomePage, goToTeamSelectPage)
 
 
 }

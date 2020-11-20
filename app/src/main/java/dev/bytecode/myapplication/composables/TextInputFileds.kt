@@ -2,7 +2,8 @@ package dev.bytecode.myapplication
 
 
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -11,14 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.ResourceFont
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,9 +31,8 @@ fun makeTextInputField(
 
     val fieldValue by value.observeAsState()
 
-
     TextField(
-        modifier = Modifier.padding(horizontal =  20.dp),
+        modifier = Modifier.width(236.dp).paddingFromBaseline(bottom = 9.5.dp),
         value = if(fieldValue.isNullOrEmpty()) "" else  fieldValue!!,
         textStyle = kTextFieldPlaceHolderStyle,
         onValueChange = onChange,
@@ -52,7 +46,6 @@ fun makeTextInputField(
         backgroundColor = Color.Transparent,
         activeColor = Color.White,
         inactiveColor = Color.Transparent,
-
     )
 
 }
