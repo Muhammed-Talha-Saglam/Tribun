@@ -1,18 +1,32 @@
 <resources>
 
     <string name="app_name">Tribün</string>
+    <string name="title_activity_home_screen">My Compose App</string>
+    <string name="title_activity_select_team">My Compose App</string>
+
+    // Text fields
     <string name="name_surname">İsim Soyisim</string>
     <string name="email_placeholder">E-Posta</string>
     <string name="password_placeholder">Şifre</string>
     <string name="password_placeholder2">Şifre (En az 6 hane)</string>
+
+    // Buttons
     <string name="sign_in">GİRİŞ YAP</string>
     <string name="sign_up">KAYDOL</string>
     <string name="reset">Sıfırla</string>
+
+    // Bottom texts
     <string name="create_new_account">Yeni Hesap Oluştur</string>
     <string name="forgot_password">Şifreni Mi Unuttun?</string>
     <string name="already_have_account">Zaten Bir Hesabım Var</string>
+
+    // Top bar titles
     <string name="forgot_password_topbar">Şifremi Unuttum</string>
-    <string name="title_activity_home_screen">My Compose App</string>
-    <string name="title_activity_select_team">My Compose App</string>
+
+    // Bottom navigation bar
+    <string name="NEWS">HABERLER</string>
+    <string name="TWITTER">TWİTTER</string>
+    <string name="PROFILE">PROFİLE</string>
+
 
 </resources>

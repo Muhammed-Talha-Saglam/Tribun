@@ -8,23 +8,35 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.setContent
+import androidx.lifecycle.ViewModelProvider
 import dev.bytecode.myapplication.activities.ui.SelectTeamActivity
-import dev.bytecode.myapplication.pages.LoginScreen
+import dev.bytecode.myapplication.screens.MakeLoginScreen
 import dev.bytecode.myapplication.ui.MyApplicationTheme
+import dev.bytecode.myapplication.viewModelClasses.AuthenticationViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
 
+    // We manage the state of the login page in AuthenticationViewModel class.
+    // Authentication processes are also done there.
+    private lateinit var authViewModel: AuthenticationViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        authViewModel = ViewModelProvider(this).get(AuthenticationViewModel::class.java)
+
+        // The user haven't signed out, directly navigate to Home Screen.
+        if (authViewModel.currentUser != null) {
+            goToHomePage()
+        }
 
         setContent {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    TribunApp(this, {goToHomePage()}, {goToSelectTeamPage()} )
+                    TribunApp(authViewModel,this, {goToHomePage()}, {goToSelectTeamPage()} )
                 }
             }
         }
@@ -50,11 +62,10 @@ class MainActivity : AppCompatActivity() {
 
 
 @Composable
-fun TribunApp(activity: Activity, goToHomePage: () -> Unit,goToTeamSelectPage: () -> Unit) {
-
+fun TribunApp(authViewModel: AuthenticationViewModel, activity: Activity, goToHomePage: () -> Unit, goToTeamSelectPage: () -> Unit) {
 
     // This screen shows username, e-mail, and password fields
-    LoginScreen(activity, goToHomePage, goToTeamSelectPage)
+    MakeLoginScreen(authViewModel, activity, goToHomePage, goToTeamSelectPage)
 
 
 }

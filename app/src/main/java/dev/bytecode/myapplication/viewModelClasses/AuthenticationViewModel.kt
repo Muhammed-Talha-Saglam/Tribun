@@ -17,6 +17,7 @@ enum class UserType {
 
 class AuthenticationViewModel : ViewModel() {
 
+
     // Hold the state of the text input fields.
     private var _userName = MutableLiveData<String>()
     private var _email = MutableLiveData<String>()
