@@ -7,12 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.loadImageResource
 
 // Returns an image with the given resource id
 @Composable
-fun loadImage(@DrawableRes resId: Int) {
+fun loadBackgroundImage(@DrawableRes resId: Int) {
 
     // Fetch image from the drawable resource file asycnly
     val img = loadImageResource(id = resId)

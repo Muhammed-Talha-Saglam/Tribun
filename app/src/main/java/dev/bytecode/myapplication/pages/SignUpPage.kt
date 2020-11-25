@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import dev.bytecode.myapplication.composables.makeBorder
 import dev.bytecode.myapplication.composables.makeLoginScreenButton
-import dev.bytecode.myapplication.utils.makeTribunLogo
+import dev.bytecode.myapplication.utils.loadLogoFromDrawable
 import dev.bytecode.myapplication.viewModelClasses.AuthenticationViewModel
 import dev.bytecode.myapplication.viewModelClasses.UserType
 
@@ -31,7 +31,7 @@ fun makeSignUpPage(
     Box(modifier = Modifier.fillMaxSize().border(color = Color.Black, width = 1.dp)) {
 
         // Background image
-        loadImage(resId = R.drawable.bg_messi)
+        loadBackgroundImage(resId = R.drawable.bg_messi)
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -41,7 +41,11 @@ fun makeSignUpPage(
             Spacer(modifier = Modifier.size(80.dp))
 
             // Tribun logo
-            makeTribunLogo()
+            loadLogoFromDrawable(
+                resId = R.drawable.tribun_logo,
+                height = 40.dp,
+                width = 279.dp
+            )
 
             Spacer(modifier = Modifier.size(105.dp))
 

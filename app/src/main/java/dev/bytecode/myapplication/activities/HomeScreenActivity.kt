@@ -1,10 +1,11 @@
 package dev.bytecode.myapplication.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.setContent
 import dev.bytecode.myapplication.MakeHomeScreen
@@ -17,16 +18,23 @@ class HomeScreenActivity : AppCompatActivity() {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    HomeScreen()
+                    HomeScreen(this) { goToLoginScreen() }
                 }
             }
         }
     }
+    // When the sign-in is successful, navigate the user to home screen
+    private fun goToLoginScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 }
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(activity: Activity, goToLoginScreen: () -> Unit) {
 
-    MakeHomeScreen()
+    MakeHomeScreen(activity) { goToLoginScreen() }
 
 }

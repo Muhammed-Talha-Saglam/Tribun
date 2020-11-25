@@ -1,22 +1,27 @@
 package dev.bytecode.myapplication.pages
 
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.viewinterop.AndroidView
+
 @Composable
 fun MakeNewsPage() {
 
-    // TODO: MAKE NEWS PAGE
-    //  Temporary content
     Box(
-        modifier = Modifier.fillMaxSize(),
-        alignment = Alignment.Center
+        modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            text = "News Page")
+        AndroidView(viewBlock = ::WebView) { webView ->
+            with(webView) {
+                settings.javaScriptEnabled = true
+                webViewClient = WebViewClient()
+                loadUrl("https://m.sporx.com/")
+            }
+
+        }
     }
 
 }

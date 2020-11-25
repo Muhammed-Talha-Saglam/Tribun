@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import dev.bytecode.myapplication.utils.newUserName
 
 
 enum class UserType {
@@ -92,6 +93,8 @@ class AuthenticationViewModel : ViewModel() {
         auth.createUserWithEmailAndPassword(email.value!!, password.value!!)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
+
+                    newUserName = userName.value!!
 
                     // Assign the current user
                     auth.currentUser?.let {

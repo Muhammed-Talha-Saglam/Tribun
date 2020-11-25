@@ -22,11 +22,24 @@
 
     // Top bar titles
     <string name="forgot_password_topbar">Şifremi Unuttum</string>
+    <string name="my_team_topbar">Takımım</string>
+    <string name="rankings_topbar">Puan Durumu</string>
+    <string name="bettings_topbar">İddaa Bülteni</string>
+    <string name="live_results_topbar">Canlı Sonuçlar</string>
+    <string name="on_tv_topbar">TV\'de Bugün</string>
 
     // Bottom navigation bar
     <string name="NEWS">HABERLER</string>
     <string name="TWITTER">TWİTTER</string>
     <string name="PROFILE">PROFİLE</string>
+
+    // Title
+    <string name="following">Takip Edilenler</string>
+    <string name="choose_team">Lütfen desteklediğiniz takımı aşağıdaki listeden seçiniz.</string>
+    <string name="choose_author">Lütfen takip etmek istediğiniz hesapları aşağıdaki listeden seçiniz. Sağ üstteki '+' işaretine basarak başka hesaplar da ekleyebilirsiniz.</string>
+
+    <string name="title_activity_bettings">My Compose App</string>
+    <string name="title_activity_select_author">My Compose App</string>
 
 
 </resources>

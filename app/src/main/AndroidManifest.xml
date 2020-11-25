@@ -10,9 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".activities.ui.SelectTeamActivity"
+            android:name=".SelectAuthorActivity"
+            android:label="@string/title_activity_select_author"
+            android:theme="@style/Theme.MyApplication.NoActionBar"/>
+
+        <activity
+            android:name=".SelectTeamActivity"
             android:label="@string/title_activity_select_team"
-            android:theme="@style/Theme.MyApplication.NoActionBar"></activity>
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name=".activities.BettingsActivity"
+            android:label="@string/title_activity_bettings"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
             android:name=".activities.HomeScreenActivity"
             android:label="@string/title_activity_home_screen"
