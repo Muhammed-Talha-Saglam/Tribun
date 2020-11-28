@@ -138,7 +138,7 @@ fun makeTeamItem(team : Team, db: DatabaseViewModel, activity: Activity) {
 
         Spacer(modifier = Modifier.width(30.dp))
 
-        team.imgUrl?.let { GlideImage(model = it, modifier = Modifier.size(40.dp), contentScale = ContentScale.Inside) }
+        team.imageUrl?.let { GlideImage(model = it, modifier = Modifier.size(40.dp), contentScale = ContentScale.Inside) }
 
         Spacer(modifier = Modifier.width(12.dp))
 

@@ -50,9 +50,8 @@ fun MakeProfilePage(activity: Activity, goToLoginScreen: () -> Unit) {
         Spacer(modifier = Modifier.height(70.dp))
 
 
-        val userPhoto = remember { userImg }
 
-        userPhoto?.let { GlideImage(
+        userImg?.let { GlideImage(
             model = it,
             modifier = Modifier.size(77.dp),
             contentScale =  ContentScale.Inside
@@ -83,9 +82,9 @@ fun MakeProfilePage(activity: Activity, goToLoginScreen: () -> Unit) {
 
             supportingTeam?.let {
 
-                it.imgUrl?.let { it1 -> GlideImage(
+                it.imageUrl?.let { it1 -> GlideImage(
                     model = it1,
-                    modifier = Modifier.size(19.dp),
+                    modifier = Modifier.size(30.dp),
                     contentScale =  ContentScale.Inside
 
                     )
@@ -109,7 +108,7 @@ fun MakeProfilePage(activity: Activity, goToLoginScreen: () -> Unit) {
             Icon(
                 asset = vectorResource(id = R.drawable.ic_pencil),
                 modifier = Modifier
-                    .size(11.7.dp),
+                    .size(17.dp),
                 tint = Color.Black
             )
 
@@ -173,15 +172,17 @@ fun MakeProfilePage(activity: Activity, goToLoginScreen: () -> Unit) {
 
         }
 
-        Spacer(modifier = Modifier.height(100.dp))
+        Spacer(modifier = Modifier.height(70.dp))
 
         Text(
             text = "Çıkış",
             style = kNameSurnameTextStyle,
-            modifier = Modifier.clickable(onClick = {
+            modifier = Modifier
+                .clickable(onClick = {
                 viewModel.signOut()
                 goToLoginScreen()
             })
+                .padding(start = 5.dp, top = 5.dp, end = 5.dp)
         )
 
         Spacer(modifier = Modifier.height(5.dp))

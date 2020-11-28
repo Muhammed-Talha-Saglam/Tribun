@@ -53,8 +53,6 @@ fun AuthorSelectPage(activity: Activity) {
     val db = viewModel(modelClass = DatabaseViewModel::class.java)
     val allAuthors = db.authors.observeAsState()
 
-
-    db.getCurrentUser()
     db.getAuthors()
 
 
@@ -221,11 +219,22 @@ fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
 
 
             if (author.following == true) {
-                checkedIcon()
+                Icon(
+                    asset = vectorResource(id = R.drawable.ic_checked),
+                    modifier = Modifier
+                        .height(21.dp)
+                        .width(28.dp),
+                    tint = Color.Black
+                )
             } else {
-                uncheckedIcon()
+                Icon(
+                    asset = vectorResource(id = R.drawable.ic_checked),
+                    modifier = Modifier
+                        .height(21.dp)
+                        .width(28.dp),
+                    tint = Color.White
+                )
             }
-
 
         }
 
@@ -237,30 +246,6 @@ fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
 
 }
 
-
-@Composable
-fun checkedIcon() {
-
-    Icon(
-        asset = vectorResource(id = R.drawable.ic_checked),
-        modifier = Modifier
-            .height(21.dp)
-            .width(28.dp),
-        tint = Color.Black
-    )
-}
-
-@Composable
-fun uncheckedIcon() {
-
-    Icon(
-        asset = vectorResource(id = R.drawable.ic_checked),
-        modifier = Modifier
-            .height(21.dp)
-            .width(28.dp),
-        tint = Color.White
-    )
-}
 
 
 @Composable

@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawShadow
+import androidx.compose.ui.drawLayer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
@@ -39,8 +41,6 @@ fun MakeHomeScreen(activity: Activity, goToLoginScreen: () -> Unit) {
 
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
-
-
 
 
     val items = listOf(
@@ -92,23 +92,25 @@ fun MakeHomeScreen(activity: Activity, goToLoginScreen: () -> Unit) {
         },
         bottomBar = {
 
-            BottomNavigation(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(67.dp)
-                    .border(
-                        color = Color.Black,
-                        shape = RoundedCornerShape(topLeft = 35.dp, topRight = 35.dp),
-                        width = 0.5.dp
-                    ),
-                backgroundColor = Color.White,
-            ) {
 
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 55.dp, vertical = 23.dp),
+                    modifier = Modifier
+                        .height(67.dp)
+                        .fillMaxWidth()
+                        .background(
+                            color = Color.White,
+                            shape = RoundedCornerShape(topLeft = 35.dp, topRight = 35.dp)
+                        )
+                        .border(
+                            width = 1.dp,
+                            color = Color.Black,
+                            shape = RoundedCornerShape(topLeft = 35.dp, topRight = 35.dp)
+                        )
+                        .padding(horizontal = 55.dp, vertical = 23.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     items.forEach { screen ->
@@ -149,7 +151,7 @@ fun MakeHomeScreen(activity: Activity, goToLoginScreen: () -> Unit) {
 
                     }
                 }
-            }
+
         },
 
         ) {

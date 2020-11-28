@@ -1,5 +1,6 @@
 package dev.bytecode.myapplication.viewModelClasses
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,7 +27,7 @@ class DatabaseViewModel : ViewModel() {
     val teams: LiveData<List<Team>> = _teams
     val authors: LiveData<List<Author>> = _authors
     val nameSurname: LiveData<String> = _nameSurname
-    val userImg: LiveData<String> = _nameSurname
+    val userImg: LiveData<String> = _userImg
     val supportingTeam: LiveData<Team> = _supportingTeam
     val followingAuthors: LiveData<MutableList<Author>> = _followingAuthors
     val twitterUserName: LiveData<String> = _twitterUserName
@@ -62,7 +63,7 @@ class DatabaseViewModel : ViewModel() {
                 val team = Team(
                     id = it["id"] as String?,
                     name = it["name"] as String?,
-                    imgUrl = it["imgUrl"] as String?,
+                    imageUrl = it["imageUrl"] as String?,
                     infoUrl = it["infoUrl"] as String?
                 )
 
@@ -83,7 +84,7 @@ class DatabaseViewModel : ViewModel() {
                 return@addSnapshotListener
             }
 
-            val list = mutableListOf<Author>()
+            val allAuthors = mutableListOf<Author>()
 
             snapshot?.documents?.forEach {
 
@@ -96,10 +97,27 @@ class DatabaseViewModel : ViewModel() {
                     following = it["following"] as Boolean?
                 )
 
-                list.add(author)
+                allAuthors.add(author)
 
             }
-            _authors.value = list
+
+            firestore.collection("users").document(currentUser!!.uid).get().addOnCompleteListener {
+
+                val snapShot =  it.result
+
+                (snapShot?.get("followingAuthors") as List<Map<*, *>>?)?.forEach { following ->
+                    Log.d("**************", following.toString())
+                    allAuthors.forEach {
+                        if(it.id == following["id"]) {
+                            it.following = true
+                        }
+                    }
+                }
+
+            }
+
+
+            _authors.value = allAuthors
 
         }
 
@@ -111,12 +129,21 @@ class DatabaseViewModel : ViewModel() {
                 it.following = author.following
             }
         }
-        val newList = authors.value
+        val newList : MutableList<Author> = mutableListOf()
+        _authors.value?.let { newList.addAll(it) }
         _authors.value = newList
 
     }
 
     fun addNewTwitterAuthor() {
+        val author = Author(
+            twitterUserName = twitterUserName.value,
+            following = true,
+            imageUrl = "https://twitter.com/${twitterUserName.value}/profile_image?size=original",
+            name = null,
+            id = null
+        )
+
         // TODO() ADD NEW AUTHOR BY HIS TWITTER USER NAME USE
         //  twitterUserName LiveData
     }
@@ -137,7 +164,7 @@ class DatabaseViewModel : ViewModel() {
                     id = teamMap?.get("id") as String?,
                     name = teamMap?.get("name") as String?,
                     infoUrl = teamMap?.get("infoUrl") as String?,
-                    imgUrl = teamMap?.get("imgUrl") as String?
+                    imageUrl = teamMap?.get("imageUrl") as String?
                 )
                 _supportingTeam.value = team
 
@@ -164,7 +191,7 @@ class DatabaseViewModel : ViewModel() {
     fun addNewUserToDatabase(team: Team) {
         firestore.collection("users").document(currentUser!!.uid).set(
             hashMapOf(
-                "id" to currentUser!!.uid,
+                "uid" to currentUser!!.uid,
                 "email" to currentUser!!.email,
                 "nameSurname" to newUserName,
                 "imageUrl" to "https://firebasestorage.googleapis.com/v0/b/tribun---deniseict.appspot.com/o/ic_avatar.jpg?alt=media&token=e7ddfc4c-3f83-4bbf-a8ed-008badea8844",

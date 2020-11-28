@@ -131,7 +131,7 @@ fun UpdateTeamPage(activity: Activity) {
 
                     Spacer(modifier = Modifier.width(30.dp))
 
-                    it.imgUrl?.let { it1 -> GlideImage(model = it1, modifier = Modifier.size(40.dp), ContentScale.Inside) }
+                    it.imageUrl?.let { it1 -> GlideImage(model = it1, modifier = Modifier.size(40.dp), ContentScale.Inside) }
 
                     Spacer(modifier = Modifier.width(12.dp))
 

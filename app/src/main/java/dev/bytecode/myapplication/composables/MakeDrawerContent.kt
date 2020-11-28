@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,7 +51,11 @@ fun makeDrawerContent(activity: Activity) {
 
 
 
-        userImg?.let { GlideImage(model = it, modifier = Modifier.size(77.dp), contentScale = ContentScale.Inside) }
+        userImg?.let { GlideImage(
+            model = it,
+            modifier = Modifier.size(77.dp),
+            contentScale = ContentScale.Inside)
+        }
 
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -129,8 +134,7 @@ fun makeDrawerContent(activity: Activity) {
                 // User sends mail to the developer
                 val intent = Intent.createChooser(Intent().apply {
                     action = Intent.ACTION_SENDTO
-                    data = Uri.parse("mailto:bytecode20@gmail.com")
-                    putExtra(Intent.EXTRA_SUBJECT, "TRİBÜN")
+                    data = Uri.parse("mailto:info@deniseict.com")
                 }, null)
                 if (intent.resolveActivity(activity.packageManager) != null) {
                     activity.startActivity(intent)
