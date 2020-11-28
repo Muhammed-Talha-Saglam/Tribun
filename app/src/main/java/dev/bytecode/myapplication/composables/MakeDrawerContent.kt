@@ -1,16 +1,16 @@
-package dev.bytecode.myapplication.composables
+package dev.bytecode.myapplication
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -21,36 +21,39 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.VectorAsset
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
-import dev.bytecode.myapplication.activities.BettingsActivity
+import dev.bytecode.myapplication.activities.*
+import dev.bytecode.myapplication.utils.GlideImage
+import dev.bytecode.myapplication.utils.loadLogoFromDrawable
 import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
 
 @Composable
 fun makeDrawerContent(activity: Activity) {
 
     val viewModel = viewModel(modelClass = DatabaseViewModel::class.java)
-    viewModel.getCurrentUser()
 
     val nameSurname by viewModel.nameSurname.observeAsState()
+    val userImg by viewModel.userImg.observeAsState()
 
-    Column(
+    viewModel.getCurrentUser()
+
+
+    ScrollableColumn(
         modifier = Modifier.background(Color.Black).fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
 
-        Spacer(modifier = Modifier.height(25.dp))
+        Spacer(modifier = Modifier.height(28.dp))
 
-        Card(
-            modifier = Modifier
-                .preferredSize(48.dp).clip(shape = CircleShape)
-        ) {
 
-            Image(asset = Icons.Default.Person)
-        }
 
+        userImg?.let { GlideImage(model = it, modifier = Modifier.size(77.dp), contentScale = ContentScale.Inside) }
+
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             color = Color.White,
@@ -58,29 +61,36 @@ fun makeDrawerContent(activity: Activity) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(60.dp))
 
 
         makeDrawerItem(
-            icon = Icons.Default.Person,
+
+            resID = R.drawable.ic_user,
             name = "Takımım",
             onClick = {
-//                val intent = Intent(activity, MyTeamActivity::class.java)
-//                activity.startActivity(intent)
+                val intent = Intent(activity, MyTeamActivity::class.java)
+                activity.startActivity(intent)
+
         }
         )
 
+        Spacer(modifier = Modifier.height(30.dp))
+
+
         makeDrawerItem(
-            icon = Icons.Default.Person,
+            resID = R.drawable.ic_search,
             name = "Puan Durumu",
             onClick = {
-//                val intent = Intent(activity, RankingActivity::class.java)
-//                activity.startActivity(intent)
+                val intent = Intent(activity, RankingActivity::class.java)
+                activity.startActivity(intent)
             }
         )
 
+        Spacer(modifier = Modifier.height(30.dp))
+
         makeDrawerItem(
-            icon = Icons.Default.Check,
+            resID = R.drawable.ic_bettings,
             name = "İddaa Bülteni",
             onClick = {
                 val intent = Intent(activity, BettingsActivity::class.java)
@@ -88,26 +98,32 @@ fun makeDrawerContent(activity: Activity) {
             }
         )
 
+        Spacer(modifier = Modifier.height(30.dp))
+
         makeDrawerItem(
-            icon = Icons.Default.Notifications,
+            resID = R.drawable.ic_stopwatch,
             name = "Canlı Sonuçlar",
             onClick = {
-//                val intent = Intent(activity, LiveResultsActivity::class.java)
-//                activity.startActivity(intent)
+                val intent = Intent(activity, LiveResultsActivity::class.java)
+                activity.startActivity(intent)
             }
         )
 
+        Spacer(modifier = Modifier.height(30.dp))
+
         makeDrawerItem(
-            icon = Icons.Default.Info,
+            resID = R.drawable.ic_tv,
             name = "TV' de Bugün",
             onClick = {
-//                val intent = Intent(activity, WhatIsOnTvActivity::class.java)
-//                activity.startActivity(intent)
+                val intent = Intent(activity, WhatIsOnTvActivity::class.java)
+                activity.startActivity(intent)
             }
         )
 
+        Spacer(modifier = Modifier.height(30.dp))
+
         makeDrawerItem(
-            icon = Icons.Default.Email,
+            resID = R.drawable.ic_email,
             name = "İletişim",
             onClick = {
                 // User sends mail to the developer
@@ -121,6 +137,7 @@ fun makeDrawerContent(activity: Activity) {
                 }
             }
         )
+        Spacer(modifier = Modifier.height(50.dp))
 
 
         Text(
@@ -129,7 +146,7 @@ fun makeDrawerContent(activity: Activity) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(25.dp))
 
     }
 
@@ -139,20 +156,22 @@ fun makeDrawerContent(activity: Activity) {
 
 
 @Composable
-fun makeDrawerItem(icon: VectorAsset, name: String, onClick: () -> Unit) {
+fun makeDrawerItem(@DrawableRes resID: Int, name: String, onClick: () -> Unit) {
     Row(
-        modifier = Modifier.clickable(onClick = onClick),
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         horizontalArrangement = Arrangement.Start
     ) {
-        Icon(asset = icon, tint = Color.White, modifier = Modifier.padding(start = 20.dp, end = 10.dp))
+        
+        Spacer(modifier = Modifier.width(63.5.dp))
+        
+        loadLogoFromDrawable(resId = resID, height = 22.8.dp, width = 19.dp)
 
-        Text(color = Color.White, text = name)
+        Spacer(modifier = Modifier.width(23.dp))
 
-        Spacer(modifier = Modifier.fillMaxWidth())
+        Text(text = name, style = kDrawerItemTextStyle)
+
     }
-    Divider(
-        color = Color.White,
-        modifier = Modifier.padding(horizontal = 15.dp).padding(bottom = 20.dp),
-        thickness = 3.dp
-    )
+
+    Spacer(modifier = Modifier.height(9.5.dp))
+
 }

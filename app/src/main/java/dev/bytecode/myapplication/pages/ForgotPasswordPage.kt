@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.loadImageResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.font
@@ -72,12 +73,13 @@ fun makeTopBar(authViewModel: AuthenticationViewModel) {
         Spacer(modifier = Modifier.width(22.dp))
 
         // The arrow icon navigates back to sign-in page
-        Image(
-            asset = imageResource(id = R.drawable.ic_back_white),
+
+        Icon(
+            asset = vectorResource(id = R.drawable.ic_back_arrow),
             modifier = Modifier
                 .size(22.dp)
-                .clickable(onClick = { authViewModel.changeUsertype(UserType.ExistingUser) })
-
+                .clickable(onClick = { authViewModel.changeUsertype(UserType.ExistingUser) }),
+            tint = Color.White
         )
 
         // Top bar title

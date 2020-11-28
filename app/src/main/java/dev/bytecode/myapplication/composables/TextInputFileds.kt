@@ -36,7 +36,7 @@ fun makeTextInputField(
         onValueChange = onChange,
         placeholder = { Text(text = placeholder,style = kTextFieldPlaceHolderStyle)
         },
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType,imeAction = ImeAction.Done),
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType,imeAction = ImeAction.Next),
         onImeActionPerformed = { ime, controler ->
             controler?.hideSoftwareKeyboard()
         },

@@ -36,10 +36,15 @@
     // Title
     <string name="following">Takip Edilenler</string>
     <string name="choose_team">Lütfen desteklediğiniz takımı aşağıdaki listeden seçiniz.</string>
-    <string name="choose_author">Lütfen takip etmek istediğiniz hesapları aşağıdaki listeden seçiniz. Sağ üstteki '+' işaretine basarak başka hesaplar da ekleyebilirsiniz.</string>
+    <string name="choose_author">Lütfen takip etmek istediğiniz hesapları aşağıdaki listeden seçiniz. Sağ üstteki \'+\' işaretine basarak başka hesaplar da ekleyebilirsiniz.</string>
 
     <string name="title_activity_bettings">My Compose App</string>
     <string name="title_activity_select_author">My Compose App</string>
+    <string name="title_activity_my_team">My Compose App</string>
+    <string name="title_activity_ranking">My Compose App</string>
+    <string name="title_activity_live_results">My Compose App</string>
+    <string name="title_activity_what_is_on_tv">My Compose App</string>
+    <string name="title_activity_update_team">My Compose App</string>
 
 
 </resources>

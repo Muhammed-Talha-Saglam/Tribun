@@ -1,6 +1,7 @@
 package dev.bytecode.myapplication
 
 import android.app.Activity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -41,11 +43,8 @@ fun makeSignUpPage(
             Spacer(modifier = Modifier.size(80.dp))
 
             // Tribun logo
-            loadLogoFromDrawable(
-                resId = R.drawable.tribun_logo,
-                height = 40.dp,
-                width = 279.dp
-            )
+            Image(asset = imageResource(id = R.drawable.tribun_logo), modifier = Modifier.height(40.dp).width(280.dp))
+
 
             Spacer(modifier = Modifier.size(105.dp))
 

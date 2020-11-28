@@ -10,10 +10,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".UpdateTeamActivity"
+            android:label="@string/title_activity_update_team"
+            android:theme="@style/Theme.MyApplication.NoActionBar"></activity>
+        <activity
+            android:name=".activities.WhatIsOnTvActivity"
+            android:label="@string/title_activity_what_is_on_tv"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name=".activities.LiveResultsActivity"
+            android:label="@string/title_activity_live_results"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name=".activities.RankingActivity"
+            android:label="@string/title_activity_ranking"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name=".activities.MyTeamActivity"
+            android:label="@string/title_activity_my_team"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
             android:name=".SelectAuthorActivity"
             android:label="@string/title_activity_select_author"
-            android:theme="@style/Theme.MyApplication.NoActionBar"/>
-
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
             android:name=".SelectTeamActivity"
             android:label="@string/title_activity_select_team"

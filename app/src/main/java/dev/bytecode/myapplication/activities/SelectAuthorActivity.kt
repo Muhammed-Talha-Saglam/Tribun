@@ -1,31 +1,36 @@
 package dev.bytecode.myapplication
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.font
+import androidx.compose.ui.text.font.fontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.viewModel
 import dev.bytecode.myapplication.Modals.Author
 import dev.bytecode.myapplication.activities.HomeScreenActivity
 import dev.bytecode.myapplication.activities.ui.MyApplicationTheme
-import dev.bytecode.myapplication.utils.loadLogoFromDrawable
-import dev.bytecode.myapplication.utils.newUserAuthors
+import dev.bytecode.myapplication.utils.GlideImage
 import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
 
 class SelectAuthorActivity : AppCompatActivity() {
@@ -35,31 +40,33 @@ class SelectAuthorActivity : AppCompatActivity() {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    AuthorSelectPage({ goToMainScreen() })
+                    AuthorSelectPage(this)
                 }
             }
         }
     }
-
-    // When the sign-in is successful, navigate the user to home screen
-    private fun goToMainScreen() {
-        val intent = Intent(this, HomeScreenActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
 }
 
 @Composable
-fun AuthorSelectPage(goToMainScreen: () -> Unit) {
+fun AuthorSelectPage(activity: Activity) {
 
     val db = viewModel(modelClass = DatabaseViewModel::class.java)
+    val allAuthors = db.authors.observeAsState()
 
-    var state = db.authors.observeAsState()
 
-    val authors = remember { state }
+    db.getCurrentUser()
+    db.getAuthors()
 
-    var selectedAuthors = mutableListOf<Author>()
 
+    val openDialog = remember { mutableStateOf(false) }
+
+    val twitterUserName by db.twitterUserName.observeAsState()
+
+    if (openDialog.value == true) {
+
+        makeDialogBox(openDialog, db, twitterUserName)
+
+    }
 
 
     Column(
@@ -68,85 +75,304 @@ fun AuthorSelectPage(goToMainScreen: () -> Unit) {
 
     ) {
 
-        Box(
-            modifier = Modifier.fillMaxWidth().height(63.dp),
-            alignment = Alignment.Center,
-        ) {
-            Text(text = stringResource(id = R.string.following), style = kTopBarTextStyle)
-        }
 
+
+        // Top bar
+        makeAuthorPageTopBar(activity, openDialog)
+
+        Spacer(modifier = Modifier.height(33.dp))
+
+        // Info Text
         Text(
-            text = stringResource(id = R.string.choose_author),
+            text = "Lütfen takip etmek istediğiniz hesapları aşağıdaki",
             style = kSelectTeamTextStyle,
-            modifier = Modifier.padding(vertical = 33.dp)
         )
+        Text(
+            text = "listeden seçiniz.",
+            style = kSelectTeamTextStyle,
 
+            )
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+
+        // list of authors
         ScrollableColumn(
-            modifier = Modifier.fillMaxWidth().height(550.dp),
+            modifier = Modifier.fillMaxWidth().height(380.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            authors.value?.forEach{
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .height(326.dp)
-                        .width(73.dp)
-                        .border(
-                            color = Color(0f, 0f, 0.3f),
-                            width = 0.7.dp,
-                            shape = RoundedCornerShape(3.dp)
-                        )
-                        .clickable(onClick = {
+            allAuthors.value?.forEach {
 
-                            selectedAuthors.add(it)
+                makeAuthorItem(db, author = it)
 
-                        })
-                ) {
+                Spacer(modifier = Modifier.height(14.3.dp))
 
-                    Box(modifier = Modifier
-                        .size(40.dp).padding(start = 30.dp, end = 12.dp)
-                        .background(color = Color.Black,shape = CircleShape)
-                    )
-
-                    Text(text = it.name!!, style = kTeamNameTextStyle)
-
-                    Spacer(modifier = Modifier.width(143.dp))
-
-                    loadLogoFromDrawable(
-                        resId = R.drawable.unchecked_icon,
-                        height = 21.dp,
-                        width = 28.dp
-                    )
-
-                }
             }
         }
 
-        TextButton(
+        Spacer(modifier = Modifier.height(30.dp))
 
-            modifier = Modifier
-                .height(45.7.dp)
-                .width(266.7.dp)
-                .background(
-                    color = Color.Black,
-                    shape = RoundedCornerShape(5.dp)
-                ),
-            onClick = {
-                newUserAuthors = selectedAuthors
-                db.addNewUserToDatabase()
-                goToMainScreen()
-            }
+        makeSaveButton(db, activity)
+
+
+    }
+
+}
+
+
+@Composable
+fun makeAuthorPageTopBar(activity: Activity, openDialog: MutableState<Boolean>) {
+
+    Box(
+        modifier = Modifier.fillMaxWidth().height(63.dp).background(color = Color.Black),
+        alignment = Alignment.Center,
+    ) {
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            Icon(
+                asset = vectorResource(id = R.drawable.ic_back_arrow),
+                modifier = Modifier
+                    .clickable(onClick = {
+                        val intent = Intent(activity, HomeScreenActivity::class.java)
+                        activity.startActivity(intent)
+                        activity.finish()
+                    })
+                    .padding(horizontal = 30.dp)
+                    .height(18.dp)
+                    .width(11.dp),
+                tint = Color.White
+            )
+            Text(text = stringResource(id = R.string.following), style = kTopBarTextStyle)
 
-            Text(
-                text = "KAYDET",
-                style = kButtonTextStyle.copy(color = Color.White),
-
-                )
+            Icon(
+                asset = vectorResource(id = R.drawable.ic_plus),
+                modifier = Modifier
+                    .clickable(onClick = {
+                        openDialog.value = true
+                    })
+                    .padding(horizontal = 30.dp)
+                    .height(16.dp)
+                    .width(16.dp),
+                tint = Color.White
+            )
         }
     }
 
 }
 
+
+@Composable
+fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
+
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clickable(onClick = {
+                if (author.following == true) {
+                    author.following = false
+                    db.updateAuthors(author)
+                } else {
+                    author.following = true
+                    db.updateAuthors(author)
+                }
+
+            })
+            .height(73.dp)
+            .width(326.dp)
+            .border(
+                color = Color.Black,
+                width = 0.3.dp,
+                shape = RoundedCornerShape(3.dp)
+            )
+
+    ) {
+
+        Spacer(modifier = Modifier.width(30.dp))
+
+
+        author.imageUrl?.let {
+
+            GlideImage(
+                model = it,
+                modifier = Modifier
+                    .size(40.dp)
+            )
+
+
+        }
+
+
+        Spacer(modifier = Modifier.width(12.dp))
+
+        Row(
+            modifier = Modifier.width(210.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+
+            Text(text = author.name!!, style = kTeamNameTextStyle)
+
+
+
+            if (author.following == true) {
+                checkedIcon()
+            } else {
+                uncheckedIcon()
+            }
+
+
+        }
+
+
+        Spacer(modifier = Modifier.width(14.3.dp))
+
+    }
+
+
+}
+
+
+@Composable
+fun checkedIcon() {
+
+    Icon(
+        asset = vectorResource(id = R.drawable.ic_checked),
+        modifier = Modifier
+            .height(21.dp)
+            .width(28.dp),
+        tint = Color.Black
+    )
+}
+
+@Composable
+fun uncheckedIcon() {
+
+    Icon(
+        asset = vectorResource(id = R.drawable.ic_checked),
+        modifier = Modifier
+            .height(21.dp)
+            .width(28.dp),
+        tint = Color.White
+    )
+}
+
+
+@Composable
+fun makeSaveButton(db: DatabaseViewModel, activity: Activity) {
+
+    TextButton(
+        modifier = Modifier
+            .height(45.7.dp)
+            .width(266.7.dp)
+            .background(
+                color = Color.Black,
+                shape = RoundedCornerShape(5.dp)
+            ),
+        onClick = {
+
+            db.updateFollowingAuthors()
+
+            val intent = Intent(activity, HomeScreenActivity::class.java)
+            activity.startActivity(intent)
+            activity.finish()
+
+        }
+    ) {
+
+        Text(
+            text = "KAYDET",
+            style = TextStyle(
+                fontSize = 11.7.sp,
+                fontFamily = defaultFontFamily,
+                lineHeight = 15.7.sp,
+                textAlign = TextAlign.Left,
+                color = Color.White
+            ),
+        )
+    }
+
+}
+
+@Composable
+fun makeDialogBox(
+    openDialog: MutableState<Boolean>,
+    db: DatabaseViewModel,
+    twitterUserName: String?
+) {
+    AlertDialog(
+        onDismissRequest = {
+            // Dismiss the dialog when the user clicks outside the dialog or on the back
+            // button. If you want to disable that functionality, simply use an empty
+            // onCloseRequest.
+            openDialog.value = false
+        },
+        text = {
+
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth().background(color = Color.Black),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        asset = imageResource(id = R.drawable.tribun_logo),
+                        modifier = Modifier.padding(vertical = 20.dp)
+                            .size(width = 96.dp, height = 17.dp)
+                    )
+                }
+
+                TextField(
+                    value = if (twitterUserName.isNullOrEmpty()) "" else twitterUserName!!,
+                    textStyle = TextStyle(fontWeight = FontWeight.SemiBold, color = Color.Black),
+                    modifier = Modifier.width(236.dp),
+                    backgroundColor = Color.Transparent,
+                    activeColor = Color.Black,
+                    onValueChange = {
+                        db.setTwitterUserName(it)
+                    },
+                    placeholder = {
+                        Text("Twitter kullanıcı adı", style = kTwitterNameTextStyle)
+                    }
+                )
+            }
+
+
+
+
+        },
+        confirmButton = {
+            TextButton(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(bottom = 14.dp, top = 30.dp)
+                    .height(45.7.dp)
+                    .width(266.7.dp)
+                    .background(
+                        color = Color.Black,
+                        shape = RoundedCornerShape(5.dp)
+                    ),
+                onClick = {
+                    db.addNewTwitterAuthor()
+                    openDialog.value = false
+                }
+            ) {
+
+                Text(
+                    text = "EKLE",
+                    style = TextStyle(
+                        fontSize = 15.sp,
+                        fontFamily = fontFamily(font(resId = R.font.neris)),
+                        lineHeight = 20.3.sp,
+                        textAlign = TextAlign.Left,
+                        color = Color.White
+                    )
+                )
+            }
+        },
+    )
+}

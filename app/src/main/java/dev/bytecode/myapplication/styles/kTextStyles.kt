@@ -77,3 +77,18 @@ val kTopBarTextStyle = TextStyle(
 
 
 
+val kDrawerItemTextStyle = TextStyle(
+    fontSize = 15.sp,
+    fontFamily = defaultFontFamily,
+    lineHeight = 20.3.sp,
+    textAlign = TextAlign.Left,
+    color = Color.White,
+)
+
+val kTwitterNameTextStyle = TextStyle(
+    fontSize = 13.sp,
+    fontFamily = defaultFontFamily,
+    lineHeight = 18.sp,
+    textAlign = TextAlign.Left,
+    color = Color(203,201,201),
+)

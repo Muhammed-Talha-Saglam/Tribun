@@ -8,9 +8,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import dev.bytecode.myapplication.Modals.Author
 import dev.bytecode.myapplication.Modals.Team
-import dev.bytecode.myapplication.utils.newUserAuthors
 import dev.bytecode.myapplication.utils.newUserName
-import dev.bytecode.myapplication.utils.newUserTeam
 
 class DatabaseViewModel : ViewModel() {
 
@@ -18,14 +16,24 @@ class DatabaseViewModel : ViewModel() {
     private var _teams = MutableLiveData<List<Team>>()
     private var _authors = MutableLiveData<List<Author>>()
     private var _nameSurname = MutableLiveData<String>()
+    private var _userImg = MutableLiveData<String>()
     private var _supportingTeam = MutableLiveData<Team>()
     private var _followingAuthors = MutableLiveData<MutableList<Author>>()
+    private var _twitterUserName = MutableLiveData<String>()
+
+
 
     val teams: LiveData<List<Team>> = _teams
     val authors: LiveData<List<Author>> = _authors
     val nameSurname: LiveData<String> = _nameSurname
+    val userImg: LiveData<String> = _nameSurname
     val supportingTeam: LiveData<Team> = _supportingTeam
-    val followingAuthor: LiveData<MutableList<Author>> = _followingAuthors
+    val followingAuthors: LiveData<MutableList<Author>> = _followingAuthors
+    val twitterUserName: LiveData<String> = _twitterUserName
+
+    fun setTwitterUserName(name: String){
+        _twitterUserName.value = name
+    }
 
 
     private lateinit var firestore: FirebaseFirestore
@@ -58,6 +66,7 @@ class DatabaseViewModel : ViewModel() {
                     infoUrl = it["infoUrl"] as String?
                 )
 
+
                 list.add(team)
             }
             _teams.value = list
@@ -88,12 +97,30 @@ class DatabaseViewModel : ViewModel() {
                 )
 
                 list.add(author)
+
             }
             _authors.value = list
 
         }
 
     }
+
+    fun updateAuthors( author: Author) {
+        _authors.value?.forEach {
+            if(author.id == it.id) {
+                it.following = author.following
+            }
+        }
+        val newList = authors.value
+        _authors.value = newList
+
+    }
+
+    fun addNewTwitterAuthor() {
+        // TODO() ADD NEW AUTHOR BY HIS TWITTER USER NAME USE
+        //  twitterUserName LiveData
+    }
+
     fun getCurrentUser() {
         firestore.collection("users").document(currentUser!!.uid)
             .addSnapshotListener { snapshot, e ->
@@ -103,6 +130,7 @@ class DatabaseViewModel : ViewModel() {
                 }
 
                 _nameSurname.value = snapshot?.get("nameSurname") as String?
+                _userImg.value = snapshot?.get("imageUrl") as String?
 
                 val teamMap = snapshot?.get("supportingTeam") as Map<*, *>?
                 val team = Team(
@@ -133,20 +161,18 @@ class DatabaseViewModel : ViewModel() {
             }
     }
 
-    fun addNewUserToDatabase() {
+    fun addNewUserToDatabase(team: Team) {
         firestore.collection("users").document(currentUser!!.uid).set(
             hashMapOf(
                 "id" to currentUser!!.uid,
                 "email" to currentUser!!.email,
                 "nameSurname" to newUserName,
                 "imageUrl" to "https://firebasestorage.googleapis.com/v0/b/tribun---deniseict.appspot.com/o/ic_avatar.jpg?alt=media&token=e7ddfc4c-3f83-4bbf-a8ed-008badea8844",
-                "supportingTeam" to newUserTeam,
-                "followingAuthors" to newUserAuthors
+                "supportingTeam" to team,
+                "followingAuthors" to null
 
             )
-        ).addOnCompleteListener {
-            getCurrentUser()
-        }
+        )
 
     }
 
@@ -155,8 +181,12 @@ class DatabaseViewModel : ViewModel() {
 
     }
 
-    fun updateFollowingAuthors(authors: List<Author>) {
-        firestore.collection("users").document(currentUser!!.uid).update("followingAuthors", authors)
+    fun updateFollowingAuthors() {
+        val followedAuthors = authors.value?.filter {
+            it.following == true
+        }
+
+        firestore.collection("users").document(currentUser!!.uid).update("followingAuthors", followedAuthors)
 
     }
 
