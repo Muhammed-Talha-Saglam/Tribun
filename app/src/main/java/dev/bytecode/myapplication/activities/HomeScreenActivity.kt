@@ -18,23 +18,17 @@ class HomeScreenActivity : AppCompatActivity() {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    HomeScreen(this) { goToLoginScreen() }
+                    HomeScreen(this)
                 }
             }
         }
-    }
-    // When the sign-in is successful, navigate the user to home screen
-    private fun goToLoginScreen() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
 }
 
 @Composable
-fun HomeScreen(activity: Activity, goToLoginScreen: () -> Unit) {
+fun HomeScreen(activity: Activity) {
 
-    MakeHomeScreen(activity) { goToLoginScreen() }
+    MakeHomeScreen(activity)
 
 }

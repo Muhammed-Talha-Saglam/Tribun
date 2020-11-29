@@ -65,21 +65,13 @@ fun SelectTeamPage( activity: Activity ) {
 
         // Top Bar
         makeSelectTeamTopBar()
-
-
         Spacer(modifier = Modifier.height(33.dp))
 
-        // Info text
-        Text(
-            text = "Lütfen desteklediğiniz takımı aşağıdaki ",
-            style = kSelectTeamTextStyle,
-        )
-        Text(
-            text = "listeden seçiniz.",
-            style = kSelectTeamTextStyle,
-        )
 
+        // Page header
+        selectTeamHeader()
         Spacer(modifier = Modifier.height(47.dp))
+
 
 
         // Teams list
@@ -90,11 +82,12 @@ fun SelectTeamPage( activity: Activity ) {
 
             teams.value?.forEach{
 
-                // Make row for each item
+                // Make row for each team
                 makeTeamItem(team = it, db = db, activity = activity)
 
-
+                // Space between the row
                 Spacer(modifier = Modifier.height(14.3.dp))
+
             }
         }
 
@@ -116,6 +109,25 @@ fun makeSelectTeamTopBar() {
 
 
 @Composable
+fun selectTeamHeader() {
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Lütfen desteklediğiniz takımı aşağıdaki ",
+            style = kSelectTeamTextStyle,
+        )
+        Text(
+            text = "listeden seçiniz.",
+            style = kSelectTeamTextStyle,
+        )
+    }
+}
+
+
+@Composable
 fun makeTeamItem(team : Team, db: DatabaseViewModel, activity: Activity) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -123,7 +135,7 @@ fun makeTeamItem(team : Team, db: DatabaseViewModel, activity: Activity) {
             .height(73.dp)
             .width(326.dp)
             .border(
-                color = Color.Black,
+                color = Color(203,201,201),
                 width = 0.3.dp,
                 shape = RoundedCornerShape(3.dp)
             )

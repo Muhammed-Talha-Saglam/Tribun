@@ -49,8 +49,8 @@ fun WhatIsOntvPage(activity: Activity) {
                 elevation = 0.dp,
                 title = {
 
-
                     makeWebViewTopBar(resId = R.string.on_tv_topbar, activity = activity)
+
                 },
             )
         }
@@ -73,7 +73,6 @@ fun WhatIsOntvPage(activity: Activity) {
         }
 
     }
-
 
 }
 

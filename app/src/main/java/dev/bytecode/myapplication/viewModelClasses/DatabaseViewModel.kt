@@ -116,7 +116,6 @@ class DatabaseViewModel : ViewModel() {
 
             }
 
-
             _authors.value = allAuthors
 
         }

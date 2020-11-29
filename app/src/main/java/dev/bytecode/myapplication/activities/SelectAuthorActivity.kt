@@ -80,16 +80,8 @@ fun AuthorSelectPage(activity: Activity) {
 
         Spacer(modifier = Modifier.height(33.dp))
 
-        // Info Text
-        Text(
-            text = "Lütfen takip etmek istediğiniz hesapları aşağıdaki",
-            style = kSelectTeamTextStyle,
-        )
-        Text(
-            text = "listeden seçiniz.",
-            style = kSelectTeamTextStyle,
-
-            )
+        // Page header
+        makeAuthorSelectHeader()
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -165,6 +157,33 @@ fun makeAuthorPageTopBar(activity: Activity, openDialog: MutableState<Boolean>) 
 
 
 @Composable
+fun makeAuthorSelectHeader() {
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Lütfen takip etmek istediğiniz hesapları aşağıdaki",
+            style = kSelectTeamTextStyle,
+        )
+        Text(
+            text = "listeden seçiniz.  Sağ üstteki '+' işaretine basarak",
+            style = kSelectTeamTextStyle,
+
+            )
+
+        Text(
+            text = "başka hesaplar da ekleyebilirsiniz.",
+            style = kSelectTeamTextStyle,
+
+            )
+    }
+
+}
+
+
+@Composable
 fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
 
 
@@ -184,7 +203,7 @@ fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
             .height(73.dp)
             .width(326.dp)
             .border(
-                color = Color.Black,
+                color = Color(203,201,201),
                 width = 0.3.dp,
                 shape = RoundedCornerShape(3.dp)
             )

@@ -51,7 +51,6 @@ fun LiveResultsPage(activity: Activity) {
                 elevation = 0.dp,
                 title = {
 
-
                     makeWebViewTopBar(resId = R.string.live_results_topbar, activity = activity)
 
                 },

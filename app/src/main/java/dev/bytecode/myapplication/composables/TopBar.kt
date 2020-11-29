@@ -21,6 +21,8 @@ import dev.bytecode.myapplication.viewModelClasses.UserType
 @Composable
 fun makeWebViewTopBar(@StringRes resId: Int, activity: Activity) {
 
+    // Top bar for WebView Screens
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically

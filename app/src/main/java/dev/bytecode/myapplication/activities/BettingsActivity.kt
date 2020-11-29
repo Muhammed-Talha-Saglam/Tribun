@@ -47,30 +47,27 @@ fun BettingsPage(activity: Activity) {
                 elevation = 0.dp,
                 title = {
 
-
                     makeWebViewTopBar(resId = R.string.bettings_topbar, activity = activity)
-
                 },
-
                 )
         }
     ) {
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
 
 
-        AndroidView(viewBlock = ::WebView) { webView ->
+            AndroidView(viewBlock = ::WebView) { webView ->
 
-            with(webView) {
-                settings.javaScriptEnabled = true
-                webViewClient = WebViewClient()
-                loadUrl("https://www.nesine.com/iddaa?et=1&ocg=MS-2%2C5&gt=Pop%C3%BCler")
+                with(webView) {
+                    settings.javaScriptEnabled = true
+                    webViewClient = WebViewClient()
+                    loadUrl("https://www.nesine.com/iddaa?et=1&ocg=MS-2%2C5&gt=Pop%C3%BCler")
+                }
+
             }
-
         }
-    }
 
     }
 

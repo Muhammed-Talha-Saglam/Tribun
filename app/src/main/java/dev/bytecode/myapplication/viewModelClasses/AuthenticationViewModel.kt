@@ -198,7 +198,7 @@ class AuthenticationViewModel : ViewModel() {
 
 
     private fun makeToastMessage(message: String, activity: Activity) {
-        val toast = Toast.makeText(
+        Toast.makeText(
             activity.baseContext, message,
             Toast.LENGTH_SHORT,
         ).show()

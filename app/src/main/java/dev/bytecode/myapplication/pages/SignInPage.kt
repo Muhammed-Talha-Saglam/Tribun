@@ -41,15 +41,13 @@ fun makeSignInPage(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
             Spacer(modifier = Modifier.size(80.dp))
 
             // Tribun logo
             Image(asset = imageResource(id = R.drawable.tribun_logo), modifier = Modifier.height(40.dp).width(280.dp))
-
             Spacer(modifier = Modifier.size(110.dp))
 
-            // Make e-mail-password fields and button
+            // Make e-mail/password fields and button
             makeSignInFields(
                 authViewModel = authViewModel,
                 activity = activity,
@@ -59,6 +57,7 @@ fun makeSignInPage(
         }
 
         // Bottom texts
+        // User navigates to the sign-up page or forgot password page by clicking here
         Box(
             modifier = Modifier.align(Alignment.BottomCenter)
         ) {
@@ -67,6 +66,11 @@ fun makeSignInPage(
 
     }
 }
+
+
+
+
+
 
 
 @Composable

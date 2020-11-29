@@ -48,19 +48,23 @@ fun makeForgotPasswordPage(authViewModel: AuthenticationViewModel, activity: Act
 
         // Top bar
         makeTopBar(authViewModel)
-
         Spacer(Modifier.height(83.3.dp))
+
 
         // Text field for the e-mail
         makePasswordResetTextField(authViewModel)
-
         Spacer(Modifier.height(27.dp))
+
 
         // This button starts the password reset process
         makeResetButton(authViewModel, activity)
 
     }
 }
+
+
+
+
 
 
 @Composable
@@ -96,6 +100,7 @@ fun makeTopBar(authViewModel: AuthenticationViewModel) {
         )
     }
 }
+
 
 @Composable
 fun makePasswordResetTextField(authViewModel: AuthenticationViewModel) {

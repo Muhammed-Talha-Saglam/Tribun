@@ -1,6 +1,4 @@
 package dev.bytecode.myapplication.utils
 
-import dev.bytecode.myapplication.Modals.Author
-import dev.bytecode.myapplication.Modals.Team
-
+// Hold the user name of the newly signed up user
 var newUserName: String = ""

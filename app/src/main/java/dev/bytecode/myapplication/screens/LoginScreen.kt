@@ -28,10 +28,13 @@ fun MakeLoginScreen(authViewModel: AuthenticationViewModel, activity: Activity, 
     // Crossfade enables a smooth transition between pages.
     Crossfade(current = state.value, animation = tween(1000)) { userType ->
         when(userType) {
+
             UserType.ExistingUser -> makeSignInPage(authViewModel = authViewModel, activity, goToHomePage)
+
             UserType.NewUser -> makeSignUpPage(authViewModel = authViewModel, activity, goToTeamSelectPage)
+
             UserType.ForgotPasswordUser -> makeForgotPasswordPage( authViewModel= authViewModel, activity)
-            else -> null
+
         }
     }
 

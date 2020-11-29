@@ -27,13 +27,5 @@ fun loadLogoFromDrawable(@DrawableRes resId: Int,height: Dp, width: Dp) {
         tint = Color.White
     )
 
-//    val logo = loadImageResource(id = resId)
-//    logo.resource.resource?.let {
-//        Image(
-//            asset = it,
-//            modifier = Modifier.height(height).width(width),
-//
-//        )
-//    }
 
 }

@@ -79,7 +79,7 @@ fun MyTeamPage(activity: Activity) {
 
             team?.let {
 
-
+                // The user has not chosen a team, warn him
                 if (it.value?.id == "other") {
                     Column(
                         modifier = Modifier.fillMaxWidth(),

@@ -49,28 +49,24 @@ fun makeDrawerContent(activity: Activity) {
 
         Spacer(modifier = Modifier.height(28.dp))
 
-
-
+        // Show user image
         userImg?.let { GlideImage(
             model = it,
             modifier = Modifier.size(77.dp),
             contentScale = ContentScale.Inside)
         }
-
-
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Show user name
         Text(
             color = Color.White,
             text = if(nameSurname.isNullOrEmpty()) "" else  nameSurname!!,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
-
         Spacer(modifier = Modifier.height(60.dp))
 
 
         makeDrawerItem(
-
             resID = R.drawable.ic_user,
             name = "Takımım",
             onClick = {
@@ -79,7 +75,6 @@ fun makeDrawerContent(activity: Activity) {
 
         }
         )
-
         Spacer(modifier = Modifier.height(30.dp))
 
 
@@ -91,8 +86,8 @@ fun makeDrawerContent(activity: Activity) {
                 activity.startActivity(intent)
             }
         )
-
         Spacer(modifier = Modifier.height(30.dp))
+
 
         makeDrawerItem(
             resID = R.drawable.ic_bettings,
@@ -102,8 +97,8 @@ fun makeDrawerContent(activity: Activity) {
                 activity.startActivity(intent)
             }
         )
-
         Spacer(modifier = Modifier.height(30.dp))
+
 
         makeDrawerItem(
             resID = R.drawable.ic_stopwatch,
@@ -113,8 +108,8 @@ fun makeDrawerContent(activity: Activity) {
                 activity.startActivity(intent)
             }
         )
-
         Spacer(modifier = Modifier.height(30.dp))
+
 
         makeDrawerItem(
             resID = R.drawable.ic_tv,
@@ -124,8 +119,8 @@ fun makeDrawerContent(activity: Activity) {
                 activity.startActivity(intent)
             }
         )
-
         Spacer(modifier = Modifier.height(30.dp))
+
 
         makeDrawerItem(
             resID = R.drawable.ic_email,
@@ -156,6 +151,8 @@ fun makeDrawerContent(activity: Activity) {
 
 
 }
+
+
 
 
 

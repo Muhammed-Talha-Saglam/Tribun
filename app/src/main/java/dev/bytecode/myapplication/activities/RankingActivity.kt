@@ -50,11 +50,7 @@ fun RankingPage(activity: Activity) {
                 modifier = Modifier.height(63.3.dp).fillMaxWidth(),
                 elevation = 0.dp,
                 title = {
-
-
                     makeWebViewTopBar(resId = R.string.rankings_topbar, activity = activity)
-
-
                 },
 
             )
