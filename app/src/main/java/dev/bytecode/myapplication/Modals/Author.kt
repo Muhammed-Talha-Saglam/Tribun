@@ -6,4 +6,5 @@ data class Author(
     val twitterUserName: String?,
     val imageUrl: String?,
     var following: Boolean?
+
 )

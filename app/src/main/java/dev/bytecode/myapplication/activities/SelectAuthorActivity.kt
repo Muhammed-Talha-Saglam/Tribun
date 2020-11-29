@@ -51,16 +51,29 @@ class SelectAuthorActivity : AppCompatActivity() {
 fun AuthorSelectPage(activity: Activity) {
 
     val db = viewModel(modelClass = DatabaseViewModel::class.java)
-    val allAuthors = db.authors.observeAsState()
 
     db.getAuthors()
 
+    makeSelectAuthorPageBody(db, activity)
+
+
+
+
+}
+
+@Composable
+fun makeSelectAuthorPageBody(db: DatabaseViewModel, activity: Activity) {
+
+    val allAuthors = db.authors.observeAsState()
+
+
+    val refresh = remember { mutableStateOf(false) }
 
     val openDialog = remember { mutableStateOf(false) }
 
     val twitterUserName by db.twitterUserName.observeAsState()
 
-    if (openDialog.value == true) {
+    if (openDialog.value) {
 
         makeDialogBox(openDialog, db, twitterUserName)
 
@@ -72,8 +85,6 @@ fun AuthorSelectPage(activity: Activity) {
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-
-
 
         // Top bar
         makeAuthorPageTopBar(activity, openDialog)
@@ -95,7 +106,7 @@ fun AuthorSelectPage(activity: Activity) {
 
             allAuthors.value?.forEach {
 
-                makeAuthorItem(db, author = it)
+                makeAuthorItem(db, author = it,refresh)
 
                 Spacer(modifier = Modifier.height(14.3.dp))
 
@@ -108,7 +119,6 @@ fun AuthorSelectPage(activity: Activity) {
 
 
     }
-
 }
 
 
@@ -184,8 +194,9 @@ fun makeAuthorSelectHeader() {
 
 
 @Composable
-fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
+fun makeAuthorItem(db: DatabaseViewModel, author: Author, refresh: MutableState<Boolean>) {
 
+    val isFollowing = remember { mutableStateOf(author.following) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -194,9 +205,15 @@ fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
                 if (author.following == true) {
                     author.following = false
                     db.updateAuthors(author)
+    //                refresh.value = !refresh.value
+                    isFollowing.value = false
+
                 } else {
                     author.following = true
                     db.updateAuthors(author)
+    //                refresh.value = !refresh.value
+                    isFollowing.value = true
+
                 }
 
             })
@@ -233,11 +250,15 @@ fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
         ) {
 
 
-            Text(text = author.name!!, style = kTeamNameTextStyle)
+            if(author.name != null) {
+                Text(text = author.name, style = kTeamNameTextStyle)
+            } else {
+                author.twitterUserName?.let { Text(text = it, style = kTeamNameTextStyle) }
+
+            }
 
 
-
-            if (author.following == true) {
+            if (isFollowing.value == true) {
                 Icon(
                     asset = vectorResource(id = R.drawable.ic_checked),
                     modifier = Modifier
@@ -247,11 +268,11 @@ fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
                 )
             } else {
                 Icon(
-                    asset = vectorResource(id = R.drawable.ic_checked),
+                    asset = vectorResource(id = R.drawable.ic_unchecked),
                     modifier = Modifier
                         .height(21.dp)
                         .width(28.dp),
-                    tint = Color.White
+                    tint = Color.Black
                 )
             }
 

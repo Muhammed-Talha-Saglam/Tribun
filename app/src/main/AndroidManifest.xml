@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+        <activity android:name=".activities.BettingOddsActivity"></activity>
         <activity
             android:name=".UpdateTeamActivity"
             android:label="@string/title_activity_update_team"
-            android:theme="@style/Theme.MyApplication.NoActionBar"></activity>
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
             android:name=".activities.WhatIsOnTvActivity"
             android:label="@string/title_activity_what_is_on_tv"

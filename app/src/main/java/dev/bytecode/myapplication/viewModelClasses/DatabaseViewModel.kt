@@ -15,7 +15,7 @@ class DatabaseViewModel : ViewModel() {
 
 
     private var _teams = MutableLiveData<List<Team>>()
-    private var _authors = MutableLiveData<List<Author>>()
+    private var _authors = MutableLiveData<MutableList<Author>>()
     private var _nameSurname = MutableLiveData<String>()
     private var _userImg = MutableLiveData<String>()
     private var _supportingTeam = MutableLiveData<Team>()
@@ -23,16 +23,15 @@ class DatabaseViewModel : ViewModel() {
     private var _twitterUserName = MutableLiveData<String>()
 
 
-
     val teams: LiveData<List<Team>> = _teams
-    val authors: LiveData<List<Author>> = _authors
+    val authors: LiveData<MutableList<Author>> = _authors
     val nameSurname: LiveData<String> = _nameSurname
     val userImg: LiveData<String> = _userImg
     val supportingTeam: LiveData<Team> = _supportingTeam
     val followingAuthors: LiveData<MutableList<Author>> = _followingAuthors
     val twitterUserName: LiveData<String> = _twitterUserName
 
-    fun setTwitterUserName(name: String){
+    fun setTwitterUserName(name: String) {
         _twitterUserName.value = name
     }
 
@@ -78,18 +77,15 @@ class DatabaseViewModel : ViewModel() {
 
     fun getAuthors() {
 
-        firestore.collection("suggestedAuthors").addSnapshotListener { snapshot, e ->
-
-            if (e != null) {
-                return@addSnapshotListener
-            }
-
-            val allAuthors = mutableListOf<Author>()
-
-            snapshot?.documents?.forEach {
+        firestore.collection("suggestedAuthors").get().addOnCompleteListener {
 
 
-                val author = Author(
+            var suggestedAuthors = mutableListOf<Author>()
+
+            it.result?.documents?.forEach {
+
+
+                var suggestedAuthor = Author(
                     id = it["id"] as String?,
                     name = it["name"] as String?,
                     twitterUserName = it["twitterUserName"] as String?,
@@ -97,40 +93,61 @@ class DatabaseViewModel : ViewModel() {
                     following = it["following"] as Boolean?
                 )
 
-                allAuthors.add(author)
+                suggestedAuthors.add(suggestedAuthor)
 
             }
 
-            firestore.collection("users").document(currentUser!!.uid).get().addOnCompleteListener {
+            var followingAuthors = mutableListOf<Author>()
 
-                val snapShot =  it.result
+            firestore.collection("users").document(currentUser!!.uid).get()
+                .addOnCompleteListener { f ->
 
-                (snapShot?.get("followingAuthors") as List<Map<*, *>>?)?.forEach { following ->
-                    Log.d("**************", following.toString())
-                    allAuthors.forEach {
-                        if(it.id == following["id"]) {
-                            it.following = true
+                    val snapShot = f.result
+
+                    (snapShot?.get("followingAuthors") as List<Map<*, *>>?)?.forEach { following ->
+
+                        Log.d("**************", following.toString())
+
+                        var followingAuthor = Author(
+                            id = following["id"] as String?,
+                            name = following["name"] as String?,
+                            twitterUserName = following["twitterUserName"] as String?,
+                            following = following["following"] as Boolean?,
+                            imageUrl = following["imageUrl"] as String?
+                        )
+                        followingAuthors.add(followingAuthor)
+
+                    }
+
+
+                    followingAuthors.forEach { follow ->
+                        suggestedAuthors.forEach { sugg ->
+                            if (follow.twitterUserName == sugg.twitterUserName) {
+                                sugg.following = true
+                            }
                         }
                     }
+
+
+
+                    Log.d("*********Temporary ", suggestedAuthors.toString())
+
+
+                    _authors.value = suggestedAuthors
+
                 }
-
-            }
-
-            _authors.value = allAuthors
 
         }
 
     }
 
-    fun updateAuthors( author: Author) {
+
+    fun updateAuthors(author: Author) {
         _authors.value?.forEach {
-            if(author.id == it.id) {
+            if (author.twitterUserName == it.twitterUserName) {
                 it.following = author.following
             }
         }
-        val newList : MutableList<Author> = mutableListOf()
-        _authors.value?.let { newList.addAll(it) }
-        _authors.value = newList
 
     }
 
@@ -142,9 +159,9 @@ class DatabaseViewModel : ViewModel() {
             name = null,
             id = null
         )
+        _authors.value?.add(author)
+        updateFollowingAuthors()
 
-        // TODO() ADD NEW AUTHOR BY HIS TWITTER USER NAME USE
-        //  twitterUserName LiveData
     }
 
     fun getCurrentUser() {
@@ -172,16 +189,15 @@ class DatabaseViewModel : ViewModel() {
 
                 authorMap?.forEach {
                     var author = Author(
-                        id = it?.get("id") as String?,
-                        name = it?.get("name") as String?,
-                        twitterUserName = it?.get("twitterUserName") as String?,
-                        imageUrl = it?.get("imgUrl") as String?,
-                        following = it?.get("following") as Boolean?,
-                        )
+                        id = it.get("id") as String?,
+                        name = it.get("name") as String?,
+                        twitterUserName = it.get("twitterUserName") as String?,
+                        imageUrl = it.get("imgUrl") as String?,
+                        following = it.get("following") as Boolean?,
+                    )
                     authorList.add(author)
                 }
                 _followingAuthors.value = authorList
-
 
 
             }
@@ -212,10 +228,10 @@ class DatabaseViewModel : ViewModel() {
             it.following == true
         }
 
-        firestore.collection("users").document(currentUser!!.uid).update("followingAuthors", followedAuthors)
+        firestore.collection("users").document(currentUser!!.uid)
+            .update("followingAuthors", followedAuthors)
 
     }
-
 
 
     fun signOut() {
