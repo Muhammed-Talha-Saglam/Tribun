@@ -4,7 +4,6 @@ import android.app.Activity
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -25,6 +24,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import dev.bytecode.myapplication.pages.MakeNewsPage
 import dev.bytecode.myapplication.pages.MakeTwitterPage
+import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
 
 
 // There are three pages on the main screen for the user to navigate
@@ -36,7 +36,9 @@ sealed class Page(val route: String, @StringRes val resoureId: Int) {
 
 
 @Composable
-fun MakeHomeScreen(activity: Activity) {
+fun MakeHomeScreen(activity: Activity, viewModel: DatabaseViewModel) {
+
+    viewModel.getCurrentUser()
 
 
     val scaffoldState = rememberScaffoldState()
@@ -54,7 +56,7 @@ fun MakeHomeScreen(activity: Activity) {
         scaffoldState = scaffoldState,
         drawerContent = {
 
-            makeDrawerContent(activity)
+            makeDrawerContent(activity, viewModel)
 
         },
         topBar = {
@@ -79,7 +81,7 @@ fun MakeHomeScreen(activity: Activity) {
         NavHost(navController = navController, startDestination = Page.Twitter.route) {
             composable("haberler") { MakeNewsPage() }
             composable("twitter") { MakeTwitterPage() }
-            composable("profile") { MakeProfilePage(activity) }
+            composable("profile") { MakeProfilePage(activity, viewModel) }
         }
     }
 

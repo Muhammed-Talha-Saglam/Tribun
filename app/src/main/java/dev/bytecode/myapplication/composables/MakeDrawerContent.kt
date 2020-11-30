@@ -24,14 +24,12 @@ import dev.bytecode.myapplication.utils.loadLogoFromDrawable
 import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
 
 @Composable
-fun makeDrawerContent(activity: Activity) {
+fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
 
-    val viewModel = viewModel(modelClass = DatabaseViewModel::class.java)
 
     val nameSurname by viewModel.nameSurname.observeAsState()
     val userImg by viewModel.userImg.observeAsState()
 
-    viewModel.getCurrentUser()
 
 
     ScrollableColumn(

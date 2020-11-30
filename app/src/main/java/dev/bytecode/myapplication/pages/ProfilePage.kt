@@ -22,23 +22,18 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.viewModel
 import dev.bytecode.myapplication.Modals.Team
 import dev.bytecode.myapplication.activities.MainActivity
 import dev.bytecode.myapplication.utils.GlideImage
 import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
 
 @Composable
-fun MakeProfilePage(activity: Activity) {
-
-    val viewModel = viewModel(modelClass = DatabaseViewModel::class.java)
+fun MakeProfilePage(activity: Activity, viewModel: DatabaseViewModel) {
 
 
     val nameSurname by viewModel.nameSurname.observeAsState()
     val supportingTeam by viewModel.supportingTeam.observeAsState()
     val userImg by viewModel.userImg.observeAsState()
-    viewModel.getCurrentUser()
-
 
 
 

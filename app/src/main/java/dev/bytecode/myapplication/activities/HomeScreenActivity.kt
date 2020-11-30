@@ -1,15 +1,16 @@
 package dev.bytecode.myapplication.activities
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.viewinterop.viewModel
 import dev.bytecode.myapplication.MakeHomeScreen
 import dev.bytecode.myapplication.activities.ui.MyApplicationTheme
+import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
 
 class HomeScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,8 @@ class HomeScreenActivity : AppCompatActivity() {
 @Composable
 fun HomeScreen(activity: Activity) {
 
-    MakeHomeScreen(activity)
+    val viewModel = viewModel(modelClass = DatabaseViewModel::class.java)
+
+    MakeHomeScreen(activity, viewModel)
 
 }

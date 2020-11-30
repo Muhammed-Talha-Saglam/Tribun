@@ -167,7 +167,9 @@ class DatabaseViewModel : ViewModel() {
                 }
 
                 _nameSurname.value = snapshot?.get("nameSurname") as String?
+
                 _userImg.value = snapshot?.get("imageUrl") as String?
+
 
                 val teamMap = snapshot?.get("supportingTeam") as Map<*, *>?
                 val team = Team(
@@ -178,6 +180,7 @@ class DatabaseViewModel : ViewModel() {
                 )
                 _supportingTeam.value = team
 
+                
                 val authorMap = snapshot?.get("followingAuthors") as List<Map<*, *>>?
                 var authorList = mutableListOf<Author>()
 
