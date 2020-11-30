@@ -63,7 +63,7 @@ fun BettingsPage(activity: Activity) {
                 with(webView) {
                     settings.javaScriptEnabled = true
                     webViewClient = WebViewClient()
-                    loadUrl("https://www.iddaa.com/")
+                    loadUrl("https://www.iddaa.com/program/futbol")
                 }
 
             }

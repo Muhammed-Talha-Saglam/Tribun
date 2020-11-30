@@ -7,4 +7,14 @@ data class Author(
     val imageUrl: String?,
     var following: Boolean?
 
-)
+) {
+
+    override fun equals(other: Any?): Boolean {
+        val another = other as Author
+        return this.twitterUserName == another.twitterUserName
+    }
+
+    override fun hashCode(): Int {
+        return twitterUserName.hashCode()
+    }
+}

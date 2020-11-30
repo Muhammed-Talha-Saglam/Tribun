@@ -120,20 +120,14 @@ class DatabaseViewModel : ViewModel() {
                     }
 
 
-                    followingAuthors.forEach { follow ->
-                        suggestedAuthors.forEach { sugg ->
-                            if (follow.twitterUserName == sugg.twitterUserName) {
-                                sugg.following = true
-                            }
-                        }
-                    }
+                    // Merge following and suggested authors lists
+                    val mergedList = followingAuthors.union(suggestedAuthors)
 
 
 
-                    Log.d("*********Temporary ", suggestedAuthors.toString())
+                    Log.d("********* Merged List ", mergedList.toString())
 
-
-                    _authors.value = suggestedAuthors
+                    _authors.value = mergedList.toMutableList()
 
                 }
 
@@ -229,7 +223,9 @@ class DatabaseViewModel : ViewModel() {
         }
 
         firestore.collection("users").document(currentUser!!.uid)
-            .update("followingAuthors", followedAuthors)
+            .update("followingAuthors", followedAuthors).addOnCompleteListener {
+                getAuthors()
+            }
 
     }
 
