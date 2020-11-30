@@ -130,60 +130,63 @@ fun makeHomeScreenBottomNavBar(
     pages: List<Page>
 ) {
 
-    Row(
-        modifier = Modifier
-            .height(67.dp)
-            .fillMaxWidth()
-            .background(
-                color = Color.White,
-                shape = RoundedCornerShape(topLeft = 35.dp, topRight = 35.dp)
-            )
-            .border(
-                width = 1.dp,
-                color = Color.Black,
-                shape = RoundedCornerShape(topLeft = 35.dp, topRight = 35.dp)
-            )
-            .padding(horizontal = 55.dp, vertical = 23.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+
+    Surface(
+        contentColor = Color(0xFFFFFFFF),
+        modifier = Modifier.fillMaxWidth().preferredHeight(67.dp),
+        shape = RoundedCornerShape(topRight = 35.dp, topLeft = 35.dp),
+        elevation = 12.dp
     ) {
-        pages.forEach { screen ->
 
-            val logo = when (screen.route) {
-                "haberler" -> R.drawable.ic_home
-                "twitter" -> R.drawable.ic_twitter
-                else -> R.drawable.ic_profile
-            }
-            var isSelected = currentRoute == screen.route
-
-
-            Box(
-                modifier = Modifier
-                    .size(50.dp).background(
-                        color = if (isSelected) Color.Black else Color.White,
-                        shape = CircleShape
-                    )
-                    .clickable(onClick = {
-                        navController.popBackStack(
-                            navController.graph.startDestination,
-                            false
-                        )
-                        if (currentRoute != screen.route) {
-                            navController.navigate(screen.route)
-
-                        }
-
-                    }),
-                alignment = Alignment.Center,
-
-                ) {
-                Icon(
-                    asset = vectorResource(id = logo),
-                    modifier = Modifier.size(20.dp),
-                    tint = if (isSelected) Color.White else Color.Black
+        Row(
+            modifier = Modifier
+                .height(67.dp)
+                .fillMaxWidth()
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(topLeft = 35.dp, topRight = 35.dp)
                 )
-            }
+                .padding(horizontal = 55.dp, vertical = 23.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            pages.forEach { screen ->
 
+                val logo = when (screen.route) {
+                    "haberler" -> R.drawable.ic_home
+                    "twitter" -> R.drawable.ic_twitter
+                    else -> R.drawable.ic_profile
+                }
+                var isSelected = currentRoute == screen.route
+
+
+                Box(
+                    modifier = Modifier
+                        .size(50.dp).background(
+                            color = if (isSelected) Color.Black else Color.White,
+                            shape = CircleShape
+                        )
+                        .clickable(onClick = {
+                            navController.popBackStack(
+                                navController.graph.startDestination,
+                                false
+                            )
+                            if (currentRoute != screen.route) {
+                                navController.navigate(screen.route)
+
+                            }
+
+                        }),
+                    alignment = Alignment.Center,
+
+                    ) {
+                    Icon(
+                        asset = vectorResource(id = logo),
+                        modifier = Modifier.size(20.dp),
+                        tint = if (isSelected) Color.White else Color.Black
+                    )
+                }
+
+            }
         }
     }
-
 }

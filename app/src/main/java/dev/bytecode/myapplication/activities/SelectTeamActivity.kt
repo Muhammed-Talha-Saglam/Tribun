@@ -139,6 +139,7 @@ fun makeTeamItem(team : Team, db: DatabaseViewModel, activity: Activity) {
                 width = 0.3.dp,
                 shape = RoundedCornerShape(3.dp)
             )
+            .drawShadow(elevation = 0.7.dp, shape =  RoundedCornerShape(3.dp))
             .clickable(onClick = {
 
                 db.addNewUserToDatabase(team)

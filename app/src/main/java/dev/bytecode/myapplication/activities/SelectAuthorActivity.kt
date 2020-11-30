@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.imageResource
@@ -67,7 +68,6 @@ fun makeSelectAuthorPageBody(db: DatabaseViewModel, activity: Activity) {
     val allAuthors = db.authors.observeAsState()
 
 
-    val refresh = remember { mutableStateOf(false) }
 
     val openDialog = remember { mutableStateOf(false) }
 
@@ -106,7 +106,7 @@ fun makeSelectAuthorPageBody(db: DatabaseViewModel, activity: Activity) {
 
             allAuthors.value?.forEach {
 
-                makeAuthorItem(db, author = it,refresh)
+                makeAuthorItem(db, author = it)
 
                 Spacer(modifier = Modifier.height(14.3.dp))
 
@@ -194,8 +194,9 @@ fun makeAuthorSelectHeader() {
 
 
 @Composable
-fun makeAuthorItem(db: DatabaseViewModel, author: Author, refresh: MutableState<Boolean>) {
+fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
 
+    // When the user taps the row, toggle the check icon
     val isFollowing = remember { mutableStateOf(author.following) }
 
     Row(
@@ -205,13 +206,11 @@ fun makeAuthorItem(db: DatabaseViewModel, author: Author, refresh: MutableState<
                 if (author.following == true) {
                     author.following = false
                     db.updateAuthors(author)
-    //                refresh.value = !refresh.value
                     isFollowing.value = false
 
                 } else {
                     author.following = true
                     db.updateAuthors(author)
-    //                refresh.value = !refresh.value
                     isFollowing.value = true
 
                 }
@@ -224,6 +223,8 @@ fun makeAuthorItem(db: DatabaseViewModel, author: Author, refresh: MutableState<
                 width = 0.3.dp,
                 shape = RoundedCornerShape(3.dp)
             )
+            .drawShadow(elevation = 0.7.dp, shape =  RoundedCornerShape(3.dp))
+
 
     ) {
 

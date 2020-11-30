@@ -75,7 +75,7 @@ fun UpdateTeamPage(activity: Activity) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            teams.value?.forEach{
+            teams.value?.forEach {
 
                 makeUpdateTeamItems(db, activity, it, supportingTeam)
                 Spacer(modifier = Modifier.height(14.3.dp))
@@ -86,7 +86,6 @@ fun UpdateTeamPage(activity: Activity) {
     }
 
 }
-
 
 
 @Composable
@@ -106,7 +105,7 @@ fun makeUpdateTeamTopBar(activity: Activity) {
                     .clickable(onClick = {
                         activity.finish()
                     })
-                    .padding(horizontal =  30.dp)
+                    .padding(horizontal = 30.dp)
                     .height(18.dp)
                     .width(11.dp),
                 tint = Color.White
@@ -153,12 +152,12 @@ fun makeUpdateTeamItems(
             .height(73.dp)
             .width(326.dp)
             .border(
-                color = Color(203,201,201),
+                color = Color(203, 201, 201),
                 width = 0.3.dp,
                 shape = RoundedCornerShape(3.dp)
             )
+            .drawShadow(elevation = 0.7.dp, shape =  RoundedCornerShape(3.dp))
             .clickable(onClick = {
-
                 db.updateSupportingTeam(team)
                 activity.finish()
             })
@@ -166,7 +165,13 @@ fun makeUpdateTeamItems(
 
         Spacer(modifier = Modifier.width(30.dp))
 
-        team.imageUrl?.let { it1 -> GlideImage(model = it1, modifier = Modifier.size(40.dp), ContentScale.Inside) }
+        team.imageUrl?.let { it1 ->
+            GlideImage(
+                model = it1,
+                modifier = Modifier.size(40.dp),
+                ContentScale.Inside
+            )
+        }
 
         Spacer(modifier = Modifier.width(12.dp))
 
@@ -178,7 +183,7 @@ fun makeUpdateTeamItems(
 
             val isSupporting = remember { supportingTeam }
 
-            if(isSupporting.value?.id == team.id) {
+            if (isSupporting.value?.id == team.id) {
                 Icon(
                     asset = vectorResource(id = R.drawable.ic_checked),
                     modifier = Modifier
@@ -190,7 +195,6 @@ fun makeUpdateTeamItems(
 
         }
 
-
-
     }
+
 }
