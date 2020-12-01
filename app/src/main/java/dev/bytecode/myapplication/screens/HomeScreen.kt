@@ -3,6 +3,7 @@ package dev.bytecode.myapplication
 import android.app.Activity
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.InteractionState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,7 +24,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import dev.bytecode.myapplication.pages.MakeNewsPage
-import dev.bytecode.myapplication.pages.MakeTwitterPage
 import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
 
 
@@ -80,8 +80,8 @@ fun MakeHomeScreen(activity: Activity, viewModel: DatabaseViewModel) {
         ) {
 
         // Show the page the user has chosen from the bottom navigation bar
-        NavHost(navController = navController, startDestination = Page.Twitter.route) {
-            composable("haberler") { MakeNewsPage() }
+        NavHost(navController = navController, startDestination = Page.Twitter.route, ) {
+            composable("haberler",) { MakeNewsPage() }
             composable("twitter") { MakeTwitterPage() }
             composable("profile") { MakeProfilePage(activity, viewModel) }
         }
@@ -135,6 +135,8 @@ fun makeHomeScreenBottomNavBar(
 ) {
 
 
+
+
     Surface(
         contentColor = Color(0xFFFFFFFF),
         modifier = Modifier.fillMaxWidth().preferredHeight(67.dp),
@@ -170,10 +172,10 @@ fun makeHomeScreenBottomNavBar(
                             shape = CircleShape
                         )
                         .clickable(onClick = {
-                            navController.popBackStack(
-                                navController.graph.startDestination,
-                                false
-                            )
+//                            navController.popBackStack(
+//                                navController.graph.startDestination,
+//                                false
+//                            )
                             if (currentRoute != screen.route) {
                                 navController.navigate(screen.route)
 

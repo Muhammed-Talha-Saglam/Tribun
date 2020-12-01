@@ -1,11 +1,14 @@
-package dev.bytecode.myapplication.pages
+package dev.bytecode.myapplication
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.viewinterop.AndroidView
+
 
 @Composable
 fun MakeTwitterPage() {
@@ -17,6 +20,7 @@ fun MakeTwitterPage() {
         alignment = Alignment.Center
     ) {
         Text(text = "TWITTER PAGE")
+
     }
 
 }

@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
@@ -51,7 +52,7 @@ fun MakeProfilePage(activity: Activity, viewModel: DatabaseViewModel) {
         // Show user image
         userImg?.let { GlideImage(
             model = it,
-            modifier = Modifier.size(77.dp).background(Color.White,shape = CircleShape),
+            modifier = Modifier.size(77.dp).clip(shape = CircleShape),
         )
         }
         Spacer(modifier = Modifier.height(18.dp))
