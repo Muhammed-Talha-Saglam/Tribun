@@ -54,7 +54,9 @@ fun MakeHomeScreen(activity: Activity, viewModel: DatabaseViewModel) {
 
     Scaffold(
         scaffoldState = scaffoldState,
+        drawerGesturesEnabled = false,
         drawerContent = {
+
 
             makeDrawerContent(activity, viewModel)
 
