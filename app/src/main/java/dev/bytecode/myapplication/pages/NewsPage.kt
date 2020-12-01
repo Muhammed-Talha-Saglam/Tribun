@@ -31,7 +31,7 @@ fun MakeNewsPage() {
             with(webView) {
                 settings.javaScriptEnabled = true
                 webViewClient = WebViewClient()
-                loadUrl("https://www.fotomac.com.tr/")
+                loadUrl("https://onedio.com/spor")
             }
 
         }
