@@ -41,7 +41,11 @@ fun MakeProfilePage(activity: Activity, viewModel: DatabaseViewModel) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+
+
         Spacer(modifier = Modifier.height(70.dp))
+
 
 
         // Show user image
@@ -73,6 +77,7 @@ fun MakeProfilePage(activity: Activity, viewModel: DatabaseViewModel) {
 
         // Show log out button.
         makeLogOutButton(activity, viewModel)
+
 
     }
 

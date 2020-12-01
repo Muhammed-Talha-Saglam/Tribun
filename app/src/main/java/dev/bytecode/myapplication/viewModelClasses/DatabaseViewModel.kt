@@ -180,7 +180,7 @@ class DatabaseViewModel : ViewModel() {
                 )
                 _supportingTeam.value = team
 
-                
+
                 val authorMap = snapshot?.get("followingAuthors") as List<Map<*, *>>?
                 var authorList = mutableListOf<Author>()
 

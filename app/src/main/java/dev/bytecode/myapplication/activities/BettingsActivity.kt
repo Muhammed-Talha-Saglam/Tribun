@@ -53,21 +53,19 @@ fun BettingsPage(activity: Activity) {
         }
     ) {
 
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-
-
-            AndroidView(viewBlock = ::WebView) { webView ->
+            AndroidView(viewBlock = ::WebView, modifier = Modifier.fillMaxSize()) { webView ->
 
                 with(webView) {
                     settings.javaScriptEnabled = true
                     webViewClient = WebViewClient()
+                    settings.domStorageEnabled = true
+                    settings.useWideViewPort = true
+                    settings.loadWithOverviewMode = true
                     loadUrl("https://www.iddaa.com/program/futbol")
                 }
 
             }
-        }
+
 
     }
 

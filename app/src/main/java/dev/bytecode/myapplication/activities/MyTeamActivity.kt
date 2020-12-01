@@ -72,52 +72,48 @@ fun MyTeamPage(activity: Activity) {
         }
     ) {
 
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
+
+        team.let {
+
+            // The user has not chosen a team, warn him
+            if (it.value?.id == "other") {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Spacer(modifier = Modifier.height(50.dp))
+                    Text(
+                        text = "Lütfen takip etmek istediğiniz takımı",
+                        style = kSelectTeamTextStyle
+                    )
+                    Text(
+                        text = "profilinizdeki takımım alanından seçiniz.",
+                        style = kSelectTeamTextStyle
+                    )
+
+                }
+
+            } else {
 
 
-            team?.let {
+                AndroidView(viewBlock = ::WebView, modifier = Modifier.fillMaxSize()) { webView ->
 
-                // The user has not chosen a team, warn him
-                if (it.value?.id == "other") {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
+                    with(webView) {
 
-                        Spacer(modifier = Modifier.height(50.dp))
-                        Text(
-                            text = "Lütfen takip etmek istediğiniz takımı",
-                            style = kSelectTeamTextStyle
-                        )
-                        Text(
-                            text = "profilinizdeki takımım alanından seçiniz.",
-                            style = kSelectTeamTextStyle
-                        )
-
-                    }
-
-                } else {
-
-
-                    AndroidView(viewBlock = ::WebView) { webView ->
-
-                        with(webView) {
-
-                            settings.javaScriptEnabled = true
-                            webViewClient = WebViewClient()
-                            it.value?.infoUrl?.let { it1 -> loadUrl(it1) }
-
-                        }
+                        settings.javaScriptEnabled = true
+                        webViewClient = WebViewClient()
+                        it.value?.infoUrl?.let { it1 -> loadUrl(it1) }
 
                     }
 
                 }
+
             }
-
-
         }
+
+
+
 
 
     }

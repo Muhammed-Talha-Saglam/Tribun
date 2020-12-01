@@ -54,21 +54,21 @@ fun LiveResultsPage(activity: Activity) {
         }
     ) {
 
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
 
+            AndroidView(viewBlock = ::WebView, modifier = Modifier.fillMaxSize(), ) { webView ->
 
-            AndroidView(viewBlock = ::WebView) { webView ->
 
                 with(webView) {
                     settings.javaScriptEnabled = true
                     webViewClient = WebViewClient()
-                    loadUrl("https://www.iddaa.com/canli-skor")
+                    settings.domStorageEnabled = true
+                    settings.useWideViewPort = true
+                    settings.loadWithOverviewMode = true
+                    loadUrl("https://www.iddaa.com/program/canli/futbol")
                 }
 
             }
-        }
+
 
     }
 }

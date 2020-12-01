@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.bytecode.myapplication">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".activities.BettingOddsActivity"></activity>
+        <activity
+            android:name=".activities.BettingsActivity"
+            android:theme="@style/Theme.MyApplication.NoActionBar"
+            />
         <activity
             android:name=".UpdateTeamActivity"
             android:label="@string/title_activity_update_team"
@@ -38,10 +43,7 @@
             android:name=".SelectTeamActivity"
             android:label="@string/title_activity_select_team"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
-        <activity
-            android:name=".activities.BettingsActivity"
-            android:label="@string/title_activity_bettings"
-            android:theme="@style/Theme.MyApplication.NoActionBar" />
+
         <activity
             android:name=".activities.HomeScreenActivity"
             android:label="@string/title_activity_home_screen"

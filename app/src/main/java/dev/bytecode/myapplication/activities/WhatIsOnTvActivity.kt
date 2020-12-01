@@ -56,12 +56,8 @@ fun WhatIsOntvPage(activity: Activity) {
         }
     ) {
 
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
 
-
-            AndroidView(viewBlock = ::WebView) { webView ->
+            AndroidView(viewBlock = ::WebView, modifier = Modifier.fillMaxSize()) { webView ->
 
                 with(webView) {
                     settings.javaScriptEnabled = true
@@ -70,7 +66,7 @@ fun WhatIsOntvPage(activity: Activity) {
                 }
 
             }
-        }
+
 
     }
 
