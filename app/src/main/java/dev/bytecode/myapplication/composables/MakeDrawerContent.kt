@@ -19,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.viewModel
 import dev.bytecode.myapplication.activities.*
 import dev.bytecode.myapplication.utils.GlideImage
 import dev.bytecode.myapplication.utils.loadLogoFromDrawable
@@ -35,7 +34,7 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
 
 
     ScrollableColumn(
-        modifier = Modifier.background(Color.Black).fillMaxSize(),
+        modifier = Modifier.background(color = Color.Black).fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -53,11 +52,12 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
 
         // Show user name
         Text(
-            color = Color.White,
+            color = Color(0xffffff),
             text = if(nameSurname.isNullOrEmpty()) "" else  nameSurname!!,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
-        Spacer(modifier = Modifier.height(60.dp))
+
+       Spacer(modifier = Modifier.height(30.dp))
 
 
         makeDrawerItem(
@@ -69,7 +69,8 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
 
         }
         )
-        Spacer(modifier = Modifier.height(30.dp))
+
+//        Spacer(modifier = Modifier.height(30.dp))
 
 
         makeDrawerItem(
@@ -80,7 +81,7 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
                 activity.startActivity(intent)
             }
         )
-        Spacer(modifier = Modifier.height(30.dp))
+  //      Spacer(modifier = Modifier.height(30.dp))
 
 
         makeDrawerItem(
@@ -91,7 +92,7 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
                 activity.startActivity(intent)
             }
         )
-        Spacer(modifier = Modifier.height(30.dp))
+    //    Spacer(modifier = Modifier.height(30.dp))
 
 
         makeDrawerItem(
@@ -102,7 +103,7 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
                 activity.startActivity(intent)
             }
         )
-        Spacer(modifier = Modifier.height(30.dp))
+//        Spacer(modifier = Modifier.height(30.dp))
 
 
         makeDrawerItem(
@@ -113,7 +114,7 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
                 activity.startActivity(intent)
             }
         )
-        Spacer(modifier = Modifier.height(30.dp))
+  //      Spacer(modifier = Modifier.height(30.dp))
 
 
         makeDrawerItem(
@@ -130,7 +131,7 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
                 }
             }
         )
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
 
         Text(
@@ -153,7 +154,7 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
 @Composable
 fun makeDrawerItem(@DrawableRes resID: Int, name: String, onClick: () -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick).padding(vertical = 15.dp),
         horizontalArrangement = Arrangement.Start
     ) {
         

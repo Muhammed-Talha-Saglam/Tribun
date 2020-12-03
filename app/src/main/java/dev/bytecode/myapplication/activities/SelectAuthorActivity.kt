@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.Icon
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.setContent
@@ -29,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.viewModel
 import dev.bytecode.myapplication.Modals.Author
-import dev.bytecode.myapplication.activities.HomeScreenActivity
 import dev.bytecode.myapplication.activities.ui.MyApplicationTheme
 import dev.bytecode.myapplication.utils.GlideImage
 import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
@@ -142,7 +143,7 @@ fun makeAuthorPageTopBar(activity: Activity, openDialog: MutableState<Boolean>) 
                         activity.startActivity(intent)
                         activity.finish()
                     })
-                    .padding(horizontal = 30.dp)
+                    .padding(horizontal = 30.dp, vertical = 15.dp)
                     .height(18.dp)
                     .width(11.dp),
                 tint = Color.White
@@ -155,7 +156,7 @@ fun makeAuthorPageTopBar(activity: Activity, openDialog: MutableState<Boolean>) 
                     .clickable(onClick = {
                         openDialog.value = true
                     })
-                    .padding(horizontal = 30.dp)
+                    .padding(horizontal = 30.dp, vertical = 15.dp)
                     .height(16.dp)
                     .width(16.dp),
                 tint = Color.White
@@ -237,6 +238,7 @@ fun makeAuthorItem(db: DatabaseViewModel, author: Author) {
                 model = it,
                 modifier = Modifier
                     .size(40.dp)
+                    .clip(shape = CircleShape)
             )
 
 

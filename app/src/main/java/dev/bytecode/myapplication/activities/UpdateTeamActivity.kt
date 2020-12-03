@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -15,6 +16,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -105,7 +107,7 @@ fun makeUpdateTeamTopBar(activity: Activity) {
                     .clickable(onClick = {
                         activity.finish()
                     })
-                    .padding(horizontal = 30.dp)
+                    .padding(horizontal = 30.dp, vertical = 15.dp)
                     .height(18.dp)
                     .width(11.dp),
                 tint = Color.White
@@ -168,7 +170,7 @@ fun makeUpdateTeamItems(
         team.imageUrl?.let { it1 ->
             GlideImage(
                 model = it1,
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(40.dp).clip(shape = CircleShape),
                 ContentScale.Inside
             )
         }

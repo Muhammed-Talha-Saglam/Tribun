@@ -52,7 +52,7 @@
             android:theme="@style/Theme.MyApplication.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.HomeScreenActivity"
+            android:name=".HomeScreenActivity"
             android:label="@string/title_activity_home_screen"
             android:theme="@style/Theme.MyApplication.NoActionBar"
             android:screenOrientation="portrait"/>

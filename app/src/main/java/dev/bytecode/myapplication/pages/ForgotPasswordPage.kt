@@ -70,19 +70,19 @@ fun makeForgotPasswordPage(authViewModel: AuthenticationViewModel, activity: Act
 @Composable
 fun makeTopBar(authViewModel: AuthenticationViewModel) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.background(color = Color.Black).height(63.dp).fillMaxWidth(),
-    ) {
+        verticalAlignment = Alignment.CenterVertically
+        ) {
 
-        Spacer(modifier = Modifier.width(22.dp))
 
         // The arrow icon navigates back to sign-in page
-
         Icon(
             asset = vectorResource(id = R.drawable.ic_back_arrow),
             modifier = Modifier
-                .size(22.dp)
-                .clickable(onClick = { authViewModel.changeUsertype(UserType.ExistingUser) }),
+                .clickable(onClick = { authViewModel.changeUsertype(UserType.ExistingUser) })
+                .padding(horizontal = 30.dp, vertical = 15.dp)
+                .height(18.dp)
+                .width(11.dp),
             tint = Color.White
         )
 
@@ -96,7 +96,7 @@ fun makeTopBar(authViewModel: AuthenticationViewModel) {
                 color = Color.White,
                 textAlign = TextAlign.Left
             ),
-            modifier = Modifier.padding(start = 75.7.dp)
+            modifier = Modifier.padding(start = 55.dp)
         )
     }
 }

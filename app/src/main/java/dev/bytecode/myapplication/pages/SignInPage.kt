@@ -137,6 +137,7 @@ fun makeSignInPageBottom(authViewModel: AuthenticationViewModel) {
             modifier = Modifier.clickable(
                 onClick = { authViewModel.changeUsertype(UserType.NewUser) }
             ).padding(
+                top = 15.dp,
                 bottom = 35.dp,
                 start = 30.dp
             )
@@ -149,6 +150,7 @@ fun makeSignInPageBottom(authViewModel: AuthenticationViewModel) {
             modifier = Modifier.clickable(
                 onClick = { authViewModel.changeUsertype(UserType.ForgotPasswordUser) }
             ).padding(
+                top = 15.dp,
                 bottom = 35.dp,
                 end = 30.dp
             )

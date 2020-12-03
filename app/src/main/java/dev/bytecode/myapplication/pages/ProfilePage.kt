@@ -52,7 +52,8 @@ fun MakeProfilePage(activity: Activity, viewModel: DatabaseViewModel) {
         // Show user image
         userImg?.let { GlideImage(
             model = it,
-            modifier = Modifier.size(77.dp).clip(shape = CircleShape),
+            modifier = Modifier.size(77.dp)
+                .clip(shape = CircleShape)
         )
         }
         Spacer(modifier = Modifier.height(18.dp))

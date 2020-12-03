@@ -67,7 +67,9 @@ fun makeSignUpPage(
                 style = kBottomPageTextStyle,
                 modifier = Modifier.clickable(
                     onClick = { authViewModel.changeUsertype(UserType.ExistingUser) }
-                ).padding(bottom = 35.dp)
+                ).padding(
+                    top = 15.dp,
+                    bottom = 35.dp)
             )
         }
 

@@ -3,7 +3,6 @@ package dev.bytecode.myapplication
 import android.app.Activity
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.InteractionState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -82,7 +81,7 @@ fun MakeHomeScreen(activity: Activity, viewModel: DatabaseViewModel) {
         // Show the page the user has chosen from the bottom navigation bar
         NavHost(navController = navController, startDestination = Page.Twitter.route, ) {
             composable("haberler",) { MakeNewsPage() }
-            composable("twitter") { MakeTwitterPage() }
+            composable("twitter") { MakeTwitterPage(viewModel, activity) }
             composable("profile") { MakeProfilePage(activity, viewModel) }
         }
     }

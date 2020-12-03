@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.twitter.sdk.android.core.models.Tweet
 import dev.bytecode.myapplication.Modals.Author
 import dev.bytecode.myapplication.Modals.Team
 import dev.bytecode.myapplication.utils.newUserName
@@ -21,6 +22,7 @@ class DatabaseViewModel : ViewModel() {
     private var _supportingTeam = MutableLiveData<Team>()
     private var _followingAuthors = MutableLiveData<MutableList<Author>>()
     private var _twitterUserName = MutableLiveData<String>()
+    private var _listOfTweets = MutableLiveData<MutableList<Tweet>>()
 
 
     val teams: LiveData<List<Team>> = _teams
@@ -30,6 +32,22 @@ class DatabaseViewModel : ViewModel() {
     val supportingTeam: LiveData<Team> = _supportingTeam
     val followingAuthors: LiveData<MutableList<Author>> = _followingAuthors
     val twitterUserName: LiveData<String> = _twitterUserName
+    var listOfTweets: LiveData<MutableList<Tweet>> = _listOfTweets
+
+    fun loadTweets(tweet: Tweet) {
+
+        if (_listOfTweets.value == null) {
+            _listOfTweets.value = mutableListOf(tweet)
+        } else
+        {
+            val newList = _listOfTweets.value!!.plus(tweet).sortedByDescending {
+                it.createdAt
+            }
+            _listOfTweets.value = newList as MutableList<Tweet>
+        }
+
+
+    }
 
     fun setTwitterUserName(name: String) {
         _twitterUserName.value = name
@@ -127,7 +145,7 @@ class DatabaseViewModel : ViewModel() {
 
                     Log.d("********* Merged List ", mergedList.toString())
 
-                    _authors.value = mergedList.toMutableList()
+                    _authors.value = mergedList.shuffled().toMutableList()
 
                 }
 
