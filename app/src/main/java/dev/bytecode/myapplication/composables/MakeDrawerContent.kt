@@ -52,7 +52,7 @@ fun makeDrawerContent(activity: Activity, viewModel: DatabaseViewModel) {
 
         // Show user name
         Text(
-            color = Color(0xffffff),
+            color = Color.White,
             text = if(nameSurname.isNullOrEmpty()) "" else  nameSurname!!,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
