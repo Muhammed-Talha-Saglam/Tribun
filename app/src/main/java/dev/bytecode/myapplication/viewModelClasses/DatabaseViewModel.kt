@@ -224,7 +224,7 @@ class DatabaseViewModel : ViewModel() {
                 "uid" to currentUser!!.uid,
                 "email" to currentUser!!.email,
                 "nameSurname" to newUserName,
-                "imageUrl" to "https://firebasestorage.googleapis.com/v0/b/tribun---deniseict.appspot.com/o/ic_avatar.jpg?alt=media&token=e7ddfc4c-3f83-4bbf-a8ed-008badea8844",
+                "imageUrl" to "https://firebasestorage.googleapis.com/v0/b/tribun-app.appspot.com/o/ic_avatar.jpg?alt=media&token=6d65002d-be50-4198-bee8-3f74eca1802c",
                 "supportingTeam" to team,
                 "followingAuthors" to null
 

@@ -19,36 +19,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import dev.bytecode.myapplication.pages.MakeNewsPage
 import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
 
 
-// There are three pages on the main screen for the user to navigate
+// There are three pages on the bottom navigation bar of the main screen for the user to navigate
 sealed class Page(val route: String, @StringRes val resoureId: Int) {
     object Haberler : Page("haberler", R.string.NEWS)
     object Twitter : Page("twitter", R.string.TWITTER)
     object Profile : Page("profile", R.string.PROFILE)
 }
 
+val pages = listOf(
+    Page.Haberler,
+    Page.Twitter,
+    Page.Profile
+)
 
 @Composable
-fun MakeHomeScreen(activity: Activity, viewModel: DatabaseViewModel) {
+fun MakeHomeScreen(
+    activity: Activity,
+    viewModel: DatabaseViewModel,
+) {
 
-    viewModel.getCurrentUser()
 
 
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
 
-
-    val pages = listOf(
-        Page.Haberler,
-        Page.Twitter,
-        Page.Profile
-    )
 
 
     Scaffold(
@@ -68,18 +68,17 @@ fun MakeHomeScreen(activity: Activity, viewModel: DatabaseViewModel) {
         },
         bottomBar = {
 
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
 
-            // Bottom navigation bar for user to navigate between NEWS, TWITTER, and PROFILE page
-            makeHomeScreenBottomNavBar(navBackStackEntry, navController,currentRoute, pages,)
+       //      Bottom navigation bar for user to navigate between NEWS, TWITTER, and PROFILE page
+             makeHomeScreenBottomNavBar(navController, pages,)
 
         },
 
         ) {
 
+
         // Show the page the user has chosen from the bottom navigation bar
-        NavHost(navController = navController, startDestination = Page.Twitter.route, ) {
+        NavHost(navController = navController, startDestination = Page.Twitter.route) {
             composable("haberler",) { MakeNewsPage() }
             composable("twitter") { MakeTwitterPage(viewModel, activity) }
             composable("profile") { MakeProfilePage(activity, viewModel) }
@@ -87,8 +86,6 @@ fun MakeHomeScreen(activity: Activity, viewModel: DatabaseViewModel) {
     }
 
 }
-
-
 
 
 
@@ -127,13 +124,12 @@ fun makeHomeScreenTopBar(scaffoldState: ScaffoldState) {
 
 @Composable
 fun makeHomeScreenBottomNavBar(
-    navBackStackEntry: NavBackStackEntry?,
     navController: NavHostController,
-    currentRoute: String?,
     pages: List<Page>
 ) {
 
-
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    var currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
 
 
     Surface(
@@ -171,10 +167,9 @@ fun makeHomeScreenBottomNavBar(
                             shape = CircleShape
                         )
                         .clickable(onClick = {
-//                            navController.popBackStack(
-//                                navController.graph.startDestination,
-//                                false
-//                            )
+
+                            navController.popBackStack(navController.graph.startDestination, false)
+
                             if (currentRoute != screen.route) {
                                 navController.navigate(screen.route)
 
