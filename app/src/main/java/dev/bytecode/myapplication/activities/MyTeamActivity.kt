@@ -3,21 +3,20 @@ package dev.bytecode.myapplication.activities
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.viewinterop.viewModel
@@ -25,9 +24,9 @@ import dev.bytecode.myapplication.R
 import dev.bytecode.myapplication.activities.ui.MyApplicationTheme
 import dev.bytecode.myapplication.composables.makeWebViewTopBar
 import dev.bytecode.myapplication.kSelectTeamTextStyle
-import dev.bytecode.myapplication.utils.loadLogoFromDrawable
+import dev.bytecode.myapplication.utils.MyWebViewClient
 import dev.bytecode.myapplication.viewModelClasses.DatabaseViewModel
-import dev.bytecode.myapplication.viewModelClasses.UserType
+import dev.bytecode.myapplication.viewModelClasses.WebViewViewModel
 
 class MyTeamActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +47,14 @@ class MyTeamActivity : AppCompatActivity() {
 @Composable
 fun MyTeamPage(activity: Activity) {
 
-    val viewModel = viewModel(modelClass = DatabaseViewModel::class.java)
-    viewModel.getCurrentUser()
-    val team = viewModel.supportingTeam.observeAsState()
+    val databaseViewModel = viewModel(modelClass = DatabaseViewModel::class.java)
+    databaseViewModel.getCurrentUser()
+    val team = databaseViewModel.supportingTeam.observeAsState()
 
+
+    val webViewModel = viewModel(modelClass = WebViewViewModel::class.java)
+    val isLoading by webViewModel.isLoading.observeAsState()
+    webViewModel.isLoading.value = true
 
 
 
@@ -96,24 +99,39 @@ fun MyTeamPage(activity: Activity) {
 
             } else {
 
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    alignment = Alignment.Center
+                ) {
 
-                AndroidView(viewBlock = ::WebView, modifier = Modifier.fillMaxSize()) { webView ->
 
-                    with(webView) {
+                    AndroidView(
+                        viewBlock = ::WebView,
+                        modifier = Modifier.fillMaxSize()
+                    ) { webView ->
 
-                        settings.javaScriptEnabled = true
-                        webViewClient = WebViewClient()
-                        it.value?.infoUrl?.let { it1 -> loadUrl(it1) }
+                        with(webView) {
+
+                            settings.javaScriptEnabled = true
+                            webViewClient = MyWebViewClient(webViewModel)
+                            it.value?.infoUrl?.let { it1 -> loadUrl(it1) }
+
+                        }
 
                     }
 
+
+                    AndroidView(viewBlock = ::ProgressBar) { progressBar ->
+
+                        if (!isLoading!!) {
+                            progressBar.visibility = View.GONE
+                        }
+
+                    }
                 }
 
             }
         }
-
-
-
 
 
     }

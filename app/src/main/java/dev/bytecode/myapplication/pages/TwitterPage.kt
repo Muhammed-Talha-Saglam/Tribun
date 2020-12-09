@@ -5,12 +5,14 @@ import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -72,7 +74,7 @@ fun MakeTwitterPage(viewModel: DatabaseViewModel, activity: Activity) {
                 }
 
                 override fun failure(exception: TwitterException?) {
-                    TODO("Not yet implemented")
+
                 }
             })
 
@@ -112,7 +114,9 @@ fun makeListOfTweets(viewModel: DatabaseViewModel, activity: Activity) {
     ) {
 
 
-        Text(text = "TWITTER PAGE")
+        CircularProgressIndicator(
+            color = Color.Black
+        )
 
 
         AndroidView(viewBlock = ::RecyclerView) { rec ->
