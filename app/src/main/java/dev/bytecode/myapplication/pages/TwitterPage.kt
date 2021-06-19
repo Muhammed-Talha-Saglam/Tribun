@@ -29,12 +29,14 @@ fun MakeTwitterPage(viewModel: DatabaseViewModel, activity: Activity) {
     viewModel.getCurrentUser()
 
 
+    
+    // Provide your own Twitter Api Keys
     val config = TwitterConfig.Builder(activity)
         .logger(DefaultLogger(Log.DEBUG))
         .twitterAuthConfig(
             TwitterAuthConfig(
-                "95hPIRKTxYrlzcRWeEiewuOs9",
-                "JSHtBZQdhZ6vs3YDF3h1IO9ZfnwBDZg2I0pENyBkobSWBneJ7s"
+                "********************",
+                "********************"
             )
         )
         .debug(true)
